@@ -45,7 +45,7 @@
         },
         mounted: function () {
             this.fakeData();
-            this.axios.get(' /api/user ' + this.$route.params.user_id).then((response) => {
+            this.axios.get('/api/user?user_id=' + this.$router.params.id).then((response) => {
                 this.success = response.success;
                 if (!this.success) {
                     this.error = response.error;

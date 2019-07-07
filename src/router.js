@@ -3,7 +3,8 @@ import Index from './pages/Index';
 import User from './pages/User';
 import Register from './pages/Register'
 import Search from './pages/Search';
-import Following from './pages/Following'
+import Following from './pages/Following';
+import FollowersList from './pages/FollowersList';
 export default [
     // { path: '/foo', component: Foo },
     // { path: '/bar', component: Bar }
@@ -35,4 +36,8 @@ export default [
         path:'/user',
         component:User
     },
+    {
+        path:'/followers_list',
+        component:FollowersList
+    }
 ]

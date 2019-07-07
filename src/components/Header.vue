@@ -20,10 +20,10 @@
             <Col span="2">
             </Col>
             <Col span="8">
-                <Input search placeholder="搜索一下，遇见新鲜" size="default" class="search"/>
+                <Input search placeholder="搜索一下，遇见新鲜" size="default" class="search" v-model="search_text"/>
             </Col>
             <Col span="2">
-                <Button type="primary" class="question">提问</Button>
+                <Button type="primary" class="question" @click="handleSearch">提问</Button>
             </Col>
             <Col span="2">
             </Col>
@@ -78,6 +78,7 @@
                 userid: "",
                 head_sculpture: "",
                 tip: "",
+                search_text:""
             }
         },
         computed: {
@@ -93,6 +94,13 @@
                     this.$router.push("/topic")
                 } else {
                     this.$router.push("/following")
+                }
+            },
+            handleSearch(){
+                if (!this.search_text){
+                    this.$Message.error("请输入查询内容");
+                } else {
+                    this.$router.push("/search/" + this.search_text)
                 }
             }
         },
@@ -128,7 +136,7 @@
     }
 
     .header {
-        margin: 10px 0px;
+        margin: 0px;
         width: 100%;
         position: fixed;
         top: 0px;
@@ -137,6 +145,8 @@
         overflow: hidden;
         box-shadow: 1px 1px 1px lightgray;
         font-size: 16px;
+        background-color: #FFF;
+        z-index: 1000;
     }
 
     .search {

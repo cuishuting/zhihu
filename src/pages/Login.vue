@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        <h1 style="margin-bottom: 20px">登录</h1>
         <Form ref="formInline" :model="formInline" :rules="ruleInline">
             <FormItem prop="user">
                 <Input type="text" v-model="formInline.user" placeholder="用户名">
@@ -63,5 +64,11 @@
     .login{
         width: 300px;
         margin: 50px auto;
+        background-color: #FFF;
+        color: #175199;
+        border: 1px solid lightgray;
+        box-shadow: 1px 1px 1px lightgray;
+        border-radius: 10px;
+        padding: 30px;
     }
 </style>

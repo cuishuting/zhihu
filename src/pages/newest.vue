@@ -9,8 +9,6 @@
     export default {
         name: "newest",
         components : {
-            // topguide,
-            // artical_title,
             artical,
         },
     }

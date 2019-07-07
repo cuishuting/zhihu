@@ -2,8 +2,27 @@
     <Card class="root">
         <div class="answer" style="text-align:left">
             <h2 class="question">{{title}}</h2>
-            <div class="answer_content">
-                <p>{{content}}</p>
+            <div class="answer_content" v-if="!read_all">
+                <p><span>{{author_name}}</span><span>: </span>{{content_fragment}} <span @click="read_all=true"
+                                                                                         class="read">阅读全文<Icon
+                        type="ios-arrow-down"/></span></p>
+            </div>
+            <div v-else>
+                <div class="author">
+                    <Row>
+                        <router-link to="">
+                            <Col span="1">
+                                <img :src="author_head">
+                            </Col>
+                            <Col span="4">
+                                {{author_name}}
+                            </Col>
+                        </router-link>
+                    </Row>
+                </div>
+                <div class="read_more_agrees">{{agree_num}} 人赞同了该回答</div>
+                <div class="content" v-html="content"></div>
+                <div class="read_more_agrees">发布于 {{time}}</div>
             </div>
         </div>
         <div class="bottom">
@@ -32,6 +51,9 @@
                     </Button>
 
                 </Col>
+                <Col span="4">
+                    <span @click="read_all=false" class="other" v-if="read_all">收起<Icon type="ios-arrow-up"/></span>
+                </Col>
             </Row>
         </div>
         <div v-if="see_com">
@@ -57,10 +79,22 @@
         ],
         computed: {
             content_fragment() {
-                return this.content.substr(0, 50) + '...';
+                if (this.content.length > 200)
+                    return this.content.substr(0, 200) + '...';
+                else return this.content;
             },
             isLogin() {
                 return this.$store.isLogin;
+            },
+            time(){
+                let date = new Date(this.timeslot * 1000);
+                let year = date.getFullYear();
+                let day = date.getDate();
+                let month = date.getMonth() + 1;
+                let hour = date.getHours();
+                let min = date.getMinutes();
+                let sec = date.getSeconds();
+                return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
             }
         },
         data() {
@@ -176,5 +210,35 @@
     .agreed {
         background-color: #0084ff;
         color: #FFF;
+    }
+
+    .author {
+        height: 24px;
+        line-height: 24px;
+        margin-top: 10px;
+    }
+
+    img {
+        height: 24px;
+        width: 24px;
+    }
+
+    .read_more_agrees {
+        color: #999;
+        margin-top: 10px;
+        text-align: left;
+        width: auto;
+    }
+
+    .content {
+        margin-top: 10px;
+    }
+
+    .read {
+        color: #175199;
+    }
+
+    .read :hover {
+        cursor: hand
     }
 </style>

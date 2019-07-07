@@ -1,38 +1,36 @@
 <template>
-    <div class="index">
-        <div class="index_header">
+    <div class="search">
+        <div class="search_header">
             <Menu mode="horizontal" theme="light" active-name="1" width="auto" @on-select="select">
                 <MenuItem name="1">
-                    最新
+                    回答
                 </MenuItem>
                 <MenuItem name="2">
-                    最热
+                    用户
                 </MenuItem>
             </Menu>
         </div>
         <template v-if="selected==1">
-            <Newest/>
+            <SearchAnswer :text="this.$route.params.str"/>
         </template>
         <template v-else>
-            <Hottest/>
+
         </template>
     </div>
 </template>
 
 <script>
-    import Hottest from "../components/Hottest";
-    import Newest from "../components/Newest"
+    import SearchAnswer from '../components/SearchAnswer'
 
     export default {
-        name: "Index",
+        name: "Search",
+        components: {
+            SearchAnswer
+        },
         data() {
             return {
                 selected: 1,
             }
-        },
-        components: {
-            Hottest,
-            Newest
         },
         methods: {
             select(value) {
@@ -43,18 +41,19 @@
 </script>
 
 <style scoped>
-    .index_header {
+    .search_header {
         width: 100%;
     }
 
-    .index {
+    .search {
         width: 60%;
         margin-left: 10%;
         border: 1px solid lightgray;
         box-shadow: 1px 1px 1px lightgray;
         border-radius: 4px;
     }
-    .index_header{
+
+    .search_header {
         z-index: -1;
     }
 </style>

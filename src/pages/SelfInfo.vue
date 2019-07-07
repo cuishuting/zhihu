@@ -32,7 +32,7 @@
 
 <script>
     export default {
-        name: "getself_info",
+        name: "SelfInfo",
         data() {
             return {
                 status:false,

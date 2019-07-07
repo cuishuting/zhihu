@@ -4,7 +4,7 @@
                 <Col span="8">
                     <div class="layout_logo"><p>LOGO</p></div>
                     <div class="layout_nav">
-                        <Menu mode="horizontal" :theme="theme1" active-name="1" width="auto">
+                        <Menu mode="horizontal" theme="light" active-name="1" width="auto">
                             <MenuItem name="1">
                                 <router-link to="">首页</router-link>
                             </MenuItem>
@@ -52,6 +52,7 @@
             Input,
             Button,
         },
+
         methods:{
             get_headsculpture() {
                 this.axios.get(' /api/self_info ')

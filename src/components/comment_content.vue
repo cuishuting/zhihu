@@ -1,67 +1,47 @@
 <template>
     <Card style="width:50%;height:200px;margin-left:10%">
         <div class="comment" style="text-align:left">
-            <Avatar shape="square" src="comment_author_head_sculpture" size="small" />
-            <p>content</p>
-        </div>
-        <div class="bottom">
-            <Button :size="buttonSize" icon="md-arrow-dropup" type="primary" @click="agree_count++" style="float:left">
-                赞同
-            </Button>
+            <Avatar shape="square" src="comment_author_head_sculpture" size="small" style="float:left"/>
+            <span>cst</span>
             <br>
-            <div class="show_count"><input type="text" value="0" size="1" v-model="agree_count"
-                                           style="border:transparent;background-color: #2d8cf0;text-align: center;color:white">
-            </div>
-            <Button type="info" @click="agree_count--" style="float:left;margin-top: -21px;margin-left:40px;">👎
-            </Button>
-
+            <p>btsbtsbtsbts</p>
         </div>
-        <div class="right_menu">
-            <Menu mode="horizontal" theme="light" active-name="1">
-                <div class="layout-nav">
-                    <MenuItem name="1" >
-                        <Icon type="ios-text" size="20"></Icon>
-                        <span v-on:click="seecomment()">{{comment_count}}条评论</span>
-                    </MenuItem>
-                    <MenuItem name="2">
-                        <Icon type="ios-send" size="20"></Icon>
-                        查看回复
-                    </MenuItem>
-                    <MenuItem name="3">
-                        <Icon type="md-star" size="20"></Icon>
-                        收藏
-                    </MenuItem>
-                    <MenuItem name="4">
-                        <Icon type="md-star" size="20"></Icon>
-                        收藏
-                    </MenuItem>
-                    <MenuItem name="5">
-                        <Icon type="md-star" size="20"></Icon>
-                        收藏
-                    </MenuItem>
-
-
-                </div>
-            </Menu>
+        <div class="bottom" style="text-align: left">
+            <Icon type="ios-redo" />
+            <span>回复</span>
         </div>
-        <div v-show="see_com">
-            <comment_content></comment_content>
-        </div>
-
     </Card>
 </template>
 
 <script>
     export default {
-        name: "comment_content",
+        name: "Comment_content",
         data() {
             return  {
+                comment_id:'',
+                comment_author_id:'',
+                comment_author_name:'',
+                content:'',
+                refer:'',
+                time:0,
                 comment_author_head_sculpture:'',
+                answer_id:this.answer_num,
             }
         },
-        props:[' comment_author_id'],
-        mounted: function(){
-            this.axios.post()
+        props:[' comment_author_id',
+            'answer_num',
+        ],
+        mounted:function() {
+            this.axios.post( '/api/get_comment'+this.answer_id).then((response)=>{
+                    this.comment_id=response.data.comment_id;
+                    this.comment_author_id=response.data.comment_author_id;
+                    this.comment_author_name=response.data.comment_author_name;
+                    this.content=response.data.content;
+                    this.refer=response.data.refer;
+                    this.time=response.data.time;
+                    this.comment_author_head_sculpture=response.data.comment_author_head_sculpture;
+                    this.comment_author_name=response.data.comment_author_name;
+            })
         }
     }
 </script>

@@ -5,7 +5,7 @@
             <p>{{content}}</p>
         </div>
         <div class="bottom">
-            <Button :size="buttonSize" icon="md-arrow-dropup" type="primary" @click="agree_num++" style="float:left">
+            <Button size="large" icon="md-arrow-dropup" type="primary" @click="agree_num++" style="float:left">
                 赞同
             </Button>
             <br>
@@ -34,65 +34,45 @@
                 </div>
             </Menu>
         </div>
-        <div v-show="see_com">
-            <comment_content></comment_content>
+        <div v-if="see_com">
+            <Comment_content></Comment_content>
         </div>
 
     </Card>
 </template>
 
 <script>
-    import Button from 'iView';
-    import Icon from 'iView';
-    import Menu from 'iView';
+    import Button from 'iview';
+    import Icon from 'iview';
+    import Menu from 'iview';
     import Comment_content from "./comment_content";
 
     export default {
         name: "artical",
-        props:['agree_count',
-            'comment_count',
-            'question_id',
-            'question_title',
-            'answer_id',
-            'answer_author',
-            'answer_author_id',
-            'answer_content',
-            'answer_author_head_sculpture',
-            'time',
+        props:[
+            'data'
         ],
         data() {
             return {
                 see_com:false,
                 is_agree:0,
-                title:this.question_title,
-                content:this.answer_content,
-                agree_num:this.agree_count,
+                title:this.data.question_title,
+                content:this.data.answer_content,
+                agree_num:this.data.agree_count,
+                comment_num:this.data.comment_count,
+                answer_num:this.data.answer_id,
             }
         },
         component: {
             Button,
             Icon,
             Menu,
-            comment_content,
+            Comment_content,
         },
         methods: {
-            get_init_agree_count() {
-                this.axios.get('/api/newest'+this.start+this.end).then((response) => {
-                    this.agree_count = response.agree_count;
-
-                })
-            },
-            get_init_comment_count() {
-                this.axios.get('/api/newest').then((response)=>{
-                    this.comment_count=response.comment_count;
-                })
-            },
             seecomment(){
                 this.see_com= !this.see_com;
             }
-        },
-        mounted: function() {
-
         },
     }
 

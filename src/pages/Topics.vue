@@ -1,10 +1,16 @@
 <template>
-    <div class="topic"></div>
+    <div class="topic">
+        <TopicItem></TopicItem>
+    </div>
 </template>
 
 <script>
+    import TopicItem from '../components/TopicItem'
     export default {
-        name: "Topics"
+        name: "Topics",
+        components: {
+            TopicItem
+        }
     }
 </script>
 

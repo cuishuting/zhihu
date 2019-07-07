@@ -4,7 +4,7 @@
                 <Col span="8">
                     <div class="layout_logo"><p>LOGO</p></div>
                     <div class="layout_nav">
-                        <Menu mode="horizontal" :theme="theme1" active-name="1" width="auto">
+                        <Menu mode="horizontal" theme="light" active-name="1" width="auto">
                             <MenuItem name="1">
                                 <router-link to="">首页</router-link>
                             </MenuItem>
@@ -26,7 +26,7 @@
                 <Col span="2">
                     <div class="headsculpture">
                         <Badge :count="get_tips">
-                        <Avatar src="get_headsculpture" />
+                        <Avatar :src="get_headsculpture()" />
                         </Badge>
                     </div>
                 </Col>
@@ -54,7 +54,7 @@
         },
         methods:{
             get_headsculpture() {
-                this.axios.get(' /api/self_info ')
+                this.axios.get('/api/self_info')
                     .then((response)=>{
                         return response.head_sculpture;
                     })

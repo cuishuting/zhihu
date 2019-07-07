@@ -35,16 +35,16 @@
             </Menu>
         </div>
         <div v-show="see_com">
-            <comment_content></comment_content>
+            <Comment_content></Comment_content>
         </div>
 
     </Card>
 </template>
 
 <script>
-    import Button from 'iView';
-    import Icon from 'iView';
-    import Menu from 'iView';
+    import Button from 'iview';
+    import Icon from 'iview';
+    import Menu from 'iview';
     import Comment_content from "./comment_content";
 
     export default {
@@ -73,7 +73,7 @@
             Button,
             Icon,
             Menu,
-            comment_content,
+            Comment_content,
         },
         methods: {
             get_init_agree_count() {

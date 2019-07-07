@@ -13,7 +13,7 @@
                 </Input>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">登陆</Button>
+                <Button type="primary" @click="handleSubmit(formInline)">登陆</Button>
             </FormItem>
         </Form>
     </div>
@@ -32,7 +32,8 @@
                     user: [
                         {required: true}
                     ],
-                }
+                },
+                url: "/api/login"
             }
         },
         methods: {

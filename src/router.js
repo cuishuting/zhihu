@@ -6,8 +6,6 @@ import Search from './pages/Search';
 import Following from './pages/Following';
 import FollowersList from './pages/FollowersList';
 export default [
-    // { path: '/foo', component: Foo },
-    // { path: '/bar', component: Bar }
     {
         path: '/',
         component: Index
@@ -33,7 +31,7 @@ export default [
         component: Index
     },
     {
-        path:'/user',
+        path:'/user/:id',
         component:User
     },
     {

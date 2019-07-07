@@ -1,10 +1,14 @@
 <template>
-    <div>
+    <div class="list">
         <ul v-if="data.length">
-            <li v-for="(item,key) in data" :key="key">
+
+            <li v-for="(item,key) in data" :key="key" style="margin-top: 3px">
                 <AnswerItem :data="item"></AnswerItem>
             </li>
         </ul>
+        <div v-if="data.length && hasMore" class="hint" @click="getAnswer()">
+            加载更多
+        </div>
         <div v-else class="hint">
             没有找到回答, 请稍后再试...
         </div>
@@ -15,26 +19,35 @@
     import AnswerItem from '../components/AnswerItem.vue';
 
     export default {
-        name: "Newest",
+        name: "AnswerList",
+        props: {
+            api: String,
+            more_data: {
+                type: String,
+                default: ""
+            }
+        },
         data() {
             return {
                 data: [],
                 start: 0,
                 end: 20,
                 error: '',
-                hasMore: false,
+                hasMore: true,
             }
         },
         components: {
             AnswerItem,
         },
         methods: {
-            getAnswer(start, end) {
-                this.axios.get(' /api/Newest?start=' + start + '&end=' + end).then((response) => {
+            getAnswer() {
+                this.axios.get(this.api + '?start=' + this.start + '&end=' + this.end + this.more_data).then((response) => {
                     let temp = response.data;
                     if (temp.success) {
                         this.data = temp.data;
                         this.hasMore = temp.hasMore;
+                        this.start = this.end;
+                        this.end = this.start + 10;
                     } else {
                         this.$Message.error(temp.error);
                     }
@@ -47,7 +60,7 @@
             fakeData() {
                 let data1 = {
                     question_id: "123",
-                    question_title: "测试问题1",
+                    question_title: "测试问题3",
                     answer_id: "1234",
                     answer_author: "name1",
                     answer_author_id: "12345",
@@ -60,7 +73,7 @@
                 };
                 let data2 = {
                     question_id: "1233",
-                    question_title: "测试问题2",
+                    question_title: "测试问题4",
                     answer_id: "12345",
                     answer_author: "name2",
                     answer_author_id: "123453",
@@ -72,11 +85,12 @@
                     time: 1562481567
                 };
                 this.data.push(data1);
-                this.data.push(data2)
+                this.data.push(data2);
+                this.data.push(data2);
             }
         },
         mounted: function () {
-            // this.getAnswer(this.start, this.end)
+            this.getAnswer(this.start, this.end)
             this.fakeData();
         }
     }
@@ -88,7 +102,11 @@
         font-size: 14px;
     }
 
-    ul li{
+    ul li {
         list-style: none;
+    }
+
+    .list {
+        background-color: #f6f6f6;
     }
 </style>

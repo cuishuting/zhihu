@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <Header/>
+        <div style="height: 100px;"></div>
        <router-view>
        </router-view>
     </div>
@@ -32,10 +33,12 @@
         -moz-osx-font-smoothing: grayscale;
         text-align: center;
         color: #2c3e50;
+        background-color: #f6f6f6;
     }
 
     html{
         margin: 0px;
         min-width: 1300px;
+        background-color: #f6f6f6;
     }
 </style>

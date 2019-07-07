@@ -1,13 +1,26 @@
 import Login from "./pages/Login";
-import hotest from './pages/Hottest';
 import Index from './pages/Index';
 import Register from './pages/Register'
+import Search from './pages/Search';
+import Following from './pages/Following'
 
 export default [
     // { path: '/foo', component: Foo },
     // { path: '/bar', component: Bar }
     {
-        path: '/isLogin',
+        path: '/',
+        component: Index
+    },
+    {
+        path: '/search/:str',
+        component: Search
+    },
+    {
+        path: '/following',
+        component: Following
+    },
+    {
+        path: '/login',
         component: Login
     },
     {

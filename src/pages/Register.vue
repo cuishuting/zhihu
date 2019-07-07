@@ -30,7 +30,7 @@
                 </Row>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">Signin</Button>
+                <Button type="primary" @click="handleSubmit('formInline')">注册</Button>
             </FormItem>
         </Form>
     </div>
@@ -39,33 +39,33 @@
 <script>
     export default {
         data() {
-                    return {
-                        status: false,
-                        cap_url:"",
-                        formInline: {
-                            user: '',
-                            password1: '',
-                            password2: '',
-                            captcha: '',
-                        },
-                        ruleInline: {
-                            user: [
-                                {required: true}
-                            ],
-                        }
-                    }
+            return {
+                status: false,
+                cap_url: "",
+                formInline: {
+                    user: '',
+                    password1: '',
+                    password2: '',
+                    captcha: '',
                 },
-                mounted(){
-                    this.getCheckCode()
-                },
-                methods: {
-                    handleSubmit(name) {
-                        this.axios.post(this.url, {
-                            "password": name.password1,
-                            "captcha": name.captcha,
-                            "username": name.user,
-                        }, {timeout: 2500})
-                                .then((resp) => {
+                ruleInline: {
+                    user: [
+                        {required: true}
+                    ],
+                }
+            }
+        },
+        mounted() {
+            this.getCheckCode()
+        },
+        methods: {
+            handleSubmit(name) {
+                this.axios.post(this.url, {
+                    "password": name.password1,
+                    "captcha": name.captcha,
+                    "username": name.user,
+                }, {timeout: 2500})
+                    .then((resp) => {
                         let temp = resp.data;
                         if (temp.success) {
                             this.$Message.success('Success!');
@@ -98,9 +98,9 @@
 </script>
 
 <style scoped>
-    .register{
-       margin:auto;
-        width:300px;
-        height:200px;
+    .register {
+        margin: 50px auto;
+        width: 300px;
+        height: 200px;
     }
 </style>

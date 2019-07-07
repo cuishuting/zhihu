@@ -1,6 +1,8 @@
 import Login from "./pages/Login";
 import hotest from './pages/hotest';
-import newest from './pages/newest';
+import Index from './pages/Index';
+import Register from './pages/Register'
+
 export default [
     // { path: '/foo', component: Foo },
     // { path: '/bar', component: Bar }
@@ -9,14 +11,11 @@ export default [
         component: Login
     },
     {
-        path:'/Register',
+        path: '/register',
+        component: Register
     },
     {
-        path:'/newest',
-        component:newest
+        path: '/index',
+        component: Index
     },
-    {
-        path:'/hotest',
-        component:hotest
-    }
 ]

@@ -1,8 +1,8 @@
 import Login from "./pages/Login";
 import hotest from './pages/Hottest';
 import Index from './pages/Index';
-import Register from './pages/Register'
-
+import Register from './pages/Register';
+import User from './pages/User';
 export default [
     // { path: '/foo', component: Foo },
     // { path: '/bar', component: Bar }
@@ -17,5 +17,9 @@ export default [
     {
         path: '/index',
         component: Index
+    },
+    {
+        path:'/user',
+        component:User
     },
 ]

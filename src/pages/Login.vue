@@ -44,6 +44,7 @@
                         let temp = resp.data;
                         if (temp.success) {
                             this.$Message.success('Success!');
+                            this.$store.login();
                             this.$router.push('/index')
                         } else {
                             this.$Message.error(temp.error);

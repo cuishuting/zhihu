@@ -69,7 +69,7 @@
                         let temp = resp.data;
                         if (temp.success) {
                             this.$Message.success('Success!');
-                            // this.$router.push('/login')
+                            // this.$router.push('/isLogin')
                         } else {
                             this.$Message.error(temp.error);
                             this.getCheckCode();

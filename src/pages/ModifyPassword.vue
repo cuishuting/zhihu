@@ -37,7 +37,7 @@
 
 <script>
     export default {
-        name: "Modifypassword",
+        name: "ModifyPassword",
         data() {
             return {
                 cap_url: "",
@@ -59,7 +59,7 @@
                 if (this.isLogin) {
                     this.getCheckCode();
                 } else {
-                    this.$router.push('/login')
+                    this.$router.push('/isLogin')
                 }
             }, 100)
         },
@@ -80,7 +80,7 @@
                         let temp = resp.data;
                         if (temp.success) {
                             this.$Message.success('Success!');
-                            // this.$router.push('/login')
+                            // this.$router.push('/isLogin')
                         } else {
                             this.$Message.error(temp.error);
                             this.getCheckCode();

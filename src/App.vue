@@ -40,6 +40,14 @@
             hotest,
             artical,
             comment_content,
+        },
+        mounted() {
+            this.axios.get("/api/islogin").then((resp) => {
+                let data = resp.data;
+                if (data.islogin){
+                    this.store.login();
+                }
+            })
         }
     }
 </script>

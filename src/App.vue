@@ -8,8 +8,6 @@
         <topguide/>
         <br/>
         <br/>
-        <artical_title/>
-<!--        <newest/>-->
        <router-view>
        </router-view>
     </div>
@@ -23,7 +21,6 @@
     import getself_info from "./pages/getself_info";
     import topguide from "@/components/topguide";
     import newest from "./pages/newest";
-    import artical_title from '@/components/artical_title';
     import hotest from "./pages/hotest";
     import artical from '@/components/artical';
     import comment_content from '@/components/comment_content';
@@ -36,10 +33,17 @@
             Login,
             Modifypassword,
             newest,
-            artical_title,
             hotest,
             artical,
             comment_content,
+        },
+        mounted() {
+            this.axios.get("/api/islogin").then((resp) => {
+                let data = resp.data;
+                if (data.islogin){
+                    this.store.login();
+                }
+            })
         }
     }
 </script>

@@ -1,42 +1,62 @@
 <template>
-        <div class="topguide" style="position: fixed">
-            <Row>
-                <Col span="8">
-                    <div class="layout_logo"><p>LOGO</p></div>
-                    <div class="layout_nav">
-                        <Menu mode="horizontal" theme="light" active-name="1" width="auto">
-                            <MenuItem name="1">
-                                <router-link to="">首页</router-link>
-                            </MenuItem>
-                            <MenuItem name="2">
-                                话题
-                            </MenuItem>
-                            <MenuItem name="4">
-                                关注
-                            </MenuItem>
-                        </Menu>
-                    </div>
-                </Col>
-                <Col span="8">
-                    <Input search placeholder="搜索一下，遇见新鲜" size="default" class="search"/>
-                </Col>
-                <Col span="2">
-                    <Button type="primary" class="question">提问</Button>
-                </Col>
-                <Col span="2">
+    <div class="topguide" style="position: fixed">
+        <Row>
+            <Col span="8">
+                <div class="layout_logo"><p>LOGO</p></div>
+                <div class="layout_nav">
+                    <Menu mode="horizontal" theme="light" active-name="1" width="auto" @on-select="select">
+                        <MenuItem name="1">
+                            首页
+                        </MenuItem>
+                        <MenuItem name="2">
+                            话题
+                        </MenuItem>
+                        <MenuItem name="3">
+                            关注
+                        </MenuItem>
+                    </Menu>
+                </div>
+            </Col>
+            <Col span="1">
+            </Col>
+            <Col span="8">
+                <Input search placeholder="搜索一下，遇见新鲜" size="default" class="search"/>
+            </Col>
+            <Col span="2">
+                <Button type="primary" class="question">提问</Button>
+            </Col>
+            <Col span="1">
+            </Col>
+            <template v-if="login">
+                <Col span="4">
                     <div class="headsculpture">
-                        <Badge :count="get_tips">
-                        <Avatar src="get_headsculpture" />
+                        <Badge :count="tip">
+                            <Avatar :src="head_sculpture"/>
                         </Badge>
                     </div>
                 </Col>
+            </template>
+            <template v-else>
                 <Col span="2">
+                    <div class="login">
+                        <router-link to="/login">
+                            登陆
+                            <Icon type="ios-contact"/>
+                        </router-link>
+                    </div>
                 </Col>
                 <Col span="2">
+                    <div class="login">
+                        <router-link to="/register">
+                            注册
+                            <Icon type="md-key"/>
+                        </router-link>
+                    </div>
                 </Col>
-            </Row>
+            </template>
+        </Row>
 
-        </div>
+    </div>
 
 </template>
 
@@ -52,51 +72,86 @@
             Input,
             Button,
         },
-
-        methods:{
-            get_headsculpture() {
-                this.axios.get(' /api/self_info ')
-                    .then((response)=>{
-                        return response.head_sculpture;
-                    })
-            },
-            get_tips() {
-                this.axios.get('/api/self_info')
-                    .then((response)=>{
-                        return response.tip;
-                    })
+        data() {
+            return {
+                username: "",
+                userid: "",
+                head_sculpture: "",
+                tip: "",
+            }
+        },
+        computed: {
+            login() {
+                return this.$store.isLogin;
+            }
+        },
+        methods: {
+            select(value){
+                if (value == 1){
+                    this.$router.push("/index")
+                }else if(value == 2){
+                    this.$router.push("/topic")
+                }else{
+                    this.$router.push("/following")
+                }
+            }
+        },
+        mounted() {
+            if (this.login) {
+                this.axios.get('/api/self_info').then((resp) => {
+                    let data = resp.data;
+                    if (data.success) {
+                        this.username = data.username;
+                        this.userid = data.userid;
+                        this.head_sculpture = data.head_sculpture;
+                        this.tip = data.tip;
+                    }
+                })
             }
         }
     }
 </script>
 
 <style scoped>
-    .layout_logo{
-        float:left;
-        font-size:30px;
-        width:80px;
-        height:60px;
-        color:#2d8cf0;
-        margin-top:18px;
+    .layout_logo {
+        float: left;
+        font-size: 30px;
+        width: 80px;
+        height: 60px;
+        color: #2d8cf0;
+        margin-top: 18px;
     }
-    .layout_nav{
-        margin-top:8px;
-        margin-left:100px;
+
+    .layout_nav {
+        margin-top: 8px;
+        margin-left: 100px;
     }
-    .topguide{
-        margin-top:-50px;
-        margin-left:50px;
-        margin-right:50px;
+
+    .topguide {
+        margin-top: -50px;
+        margin-left: 50px;
+        margin-right: 50px;
         width: 100%;
     }
-    .search{
-        margin-top:25px;
+
+    .search {
+        margin-top: 25px;
     }
-    .question{
-        margin-top:25px ;
+
+    .question {
+        margin-top: 25px;
     }
-    .headsculpture{
-        margin-top:22px;
-        margin-right:100px;
+
+    .headsculpture {
+        margin: 22px auto;
+    }
+
+    .login {
+        margin: 30px auto;
+        font-size: 16px;
+    }
+
+    .ivu-menu-horizontal.ivu-menu-light:after {
+        height: 0px;
     }
 </style>

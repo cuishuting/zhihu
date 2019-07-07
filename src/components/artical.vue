@@ -34,6 +34,7 @@
                 </div>
             </Menu>
         </div>
+
         <div v-if="see_com">
             <Comment_content></Comment_content>
         </div>

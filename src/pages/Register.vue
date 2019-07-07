@@ -59,6 +59,9 @@
         },
         mounted() {
             this.getCheckCode()
+            if (this.$store.state.isLogin) {
+                this.$router.push("/")
+            }
         },
         methods: {
             handleSubmit(name) {
@@ -102,7 +105,7 @@
 
 <style scoped>
 
-    .register{
+    .register {
         width: 300px;
         margin: 50px auto;
         background-color: #FFF;

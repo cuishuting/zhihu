@@ -36,6 +36,11 @@
                 url: "/api/login"
             }
         },
+        mounted() {
+            if (this.$store.state.isLogin) {
+                this.$router.push("/")
+            }
+        },
         methods: {
             handleSubmit(name) {
                 this.axios.post(this.url, {
@@ -46,13 +51,15 @@
                         let temp = resp.data;
                         if (temp.success) {
                             this.$Message.success('Success!');
-                            this.$store.login();
+                            this.$store.commit('login');
                             this.$router.push('/index')
                         } else {
                             this.$Message.error(temp.error);
                         }
                     })
                     .catch((err) => {
+
+                        // eslint-disable-next-line no-console
                         console.log(err);
                         this.$Message.error("提交失败,请检查网络后再试...");
                     })
@@ -62,7 +69,7 @@
 </script>
 
 <style scoped>
-    .login{
+    .login {
         width: 300px;
         margin: 50px auto;
         background-color: #FFF;

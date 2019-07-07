@@ -1,5 +1,5 @@
 <template>
-    <div class="topguide" style="position: fixed">
+    <div class="header">
         <Row>
             <Col span="8">
                 <div class="layout_logo"><p>LOGO</p></div>
@@ -17,7 +17,7 @@
                     </Menu>
                 </div>
             </Col>
-            <Col span="1">
+            <Col span="2">
             </Col>
             <Col span="8">
                 <Input search placeholder="搜索一下，遇见新鲜" size="default" class="search"/>
@@ -25,11 +25,11 @@
             <Col span="2">
                 <Button type="primary" class="question">提问</Button>
             </Col>
-            <Col span="1">
+            <Col span="2">
             </Col>
-            <template v-if="login">
+            <template v-if="isLogin">
                 <Col span="4">
-                    <div class="headsculpture">
+                    <div class="head_sculpture">
                         <Badge :count="tip">
                             <Avatar :src="head_sculpture"/>
                         </Badge>
@@ -66,7 +66,7 @@
     import Button from 'iview'
 
     export default {
-        name: "topguide",
+        name: "Header",
         component: {
             Menu,
             Input,
@@ -81,23 +81,23 @@
             }
         },
         computed: {
-            login() {
+            isLogin() {
                 return this.$store.isLogin;
             }
         },
         methods: {
-            select(value){
-                if (value == 1){
+            select(value) {
+                if (value == 1) {
                     this.$router.push("/index")
-                }else if(value == 2){
+                } else if (value == 2) {
                     this.$router.push("/topic")
-                }else{
+                } else {
                     this.$router.push("/following")
                 }
             }
         },
         mounted() {
-            if (this.login) {
+            if (this.isLogin) {
                 this.axios.get('/api/self_info').then((resp) => {
                     let data = resp.data;
                     if (data.success) {
@@ -127,11 +127,16 @@
         margin-left: 100px;
     }
 
-    .topguide {
-        margin-top: -50px;
-        margin-left: 50px;
-        margin-right: 50px;
+    .header {
+        margin: 10px 0px;
         width: 100%;
+        position: fixed;
+        top: 0px;
+        border-bottom: lightgray solid 1px;
+        height: 80px;
+        overflow: hidden;
+        box-shadow: 1px 1px 1px lightgray;
+        font-size: 16px;
     }
 
     .search {
@@ -142,7 +147,11 @@
         margin-top: 25px;
     }
 
-    .headsculpture {
+    .ivu-row {
+        margin-left: 50px;
+    }
+
+    .head_sculpture {
         margin: 22px auto;
     }
 

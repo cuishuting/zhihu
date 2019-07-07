@@ -15,7 +15,7 @@
 
 <script>
     export default {
-        name: "Comment_content",
+        name: "Comment",
         data() {
             return  {
                 comment_id:'',

@@ -26,8 +26,11 @@
                     </Button>
                 </Col>
                 <Col span="3">
-                    <Icon type="ios-send" size="20"></Icon>
-                    分享
+                    <Button @click="seeComment" type="default" class="other">
+                        <Icon type="ios-send" size="20"></Icon>
+                        分享
+                    </Button>
+
                 </Col>
             </Row>
         </div>
@@ -62,6 +65,7 @@
         },
         data() {
             return {
+                read_all: false,
                 see_com: false,
                 question_id: this.data.question_id,
                 title: this.data.question_title,
@@ -161,11 +165,9 @@
 
     .other {
         border: none;
+        color: #888;
     }
 
-    .other :active {
-        border: none;
-    }
 
     .answer_content {
         margin-top: 10px;

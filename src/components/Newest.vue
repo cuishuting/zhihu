@@ -1,11 +1,11 @@
 <template>
-    <AnswerList api="/api/Newest"></AnswerList>
+    <AnswerList api="/api/newest"></AnswerList>
 </template>
 
 <script>
     import AnswerList from "../components/AnswerList"
     export default {
-        name: "Newest",
+        name: "newest",
         components: {
             AnswerList
         },

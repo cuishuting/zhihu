@@ -53,7 +53,8 @@
                     user: [
                         {required: true}
                     ],
-                }
+                },
+                url: "/api/register"
             }
         },
         mounted() {

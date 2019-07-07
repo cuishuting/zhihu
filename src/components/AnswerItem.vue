@@ -10,7 +10,7 @@
             <div v-else>
                 <div class="author">
                     <Row>
-                        <router-link to="">
+                        <router-link :to="'/user/' + this.author_id">
                             <Col span="1">
                                 <img :src="author_head">
                             </Col>
@@ -86,7 +86,7 @@
             isLogin() {
                 return this.$store.isLogin;
             },
-            time(){
+            time() {
                 let date = new Date(this.timeslot * 1000);
                 let year = date.getFullYear();
                 let day = date.getDate();
@@ -205,6 +205,7 @@
 
     .answer_content {
         margin-top: 10px;
+        word-wrap: break-word;
     }
 
     .agreed {
@@ -232,6 +233,7 @@
 
     .content {
         margin-top: 10px;
+        word-wrap: break-word;
     }
 
     .read {

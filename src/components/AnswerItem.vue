@@ -84,7 +84,7 @@
                 else return this.content;
             },
             isLogin() {
-                return this.$store.isLogin;
+                return this.$store.state.isLogin;
             },
             time() {
                 let date = new Date(this.timeslot * 1000);

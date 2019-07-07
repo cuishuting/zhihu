@@ -6,6 +6,7 @@
 
 <script>
     import TopicItem from '../components/TopicItem'
+
     export default {
         name: "Topics",
         components: {

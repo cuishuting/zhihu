@@ -13,10 +13,10 @@
         props: [
             "data"
         ],
-        data(){
-            return{
+        data() {
+            return {
                 topic_name: this.data.topic_name,
-                topic_id : this.data.topic_id,
+                topic_id: this.data.topic_id,
                 description: this.data.description,
                 topic_pic: this.data.topic_pic
             }

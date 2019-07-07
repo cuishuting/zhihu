@@ -13,7 +13,7 @@ Vue.use(Vuex);
 Vue.use(VueRouter);
 Vue.use(iView);
 Vue.use(VueAxios, axios);
-Vue.config.productionTip = false
+Vue.config.productionTip = false;
 const RouterConfig = {
     routes: Routers
 };
@@ -23,4 +23,4 @@ new Vue({
     render: h => h(App),
     router,
     store,
-}).$mount('#app')
+}).$mount('#app');

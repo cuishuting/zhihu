@@ -46,7 +46,7 @@
                 followed: "已经关注",
                 follow_hover: "取消关注",
                 buttonSize: 'large',
-                style:{}
+                style: {}
             }
         },
         computed: {
@@ -86,9 +86,7 @@
                     this.$Message.error("")
                 }
                 if (!this.isFollow) {
-                    this.axios.post("/api/follow", {
-
-                    })
+                    this.axios.post("/api/follow", {})
                 } else {
                     this.Follow = this.not_follow;
                     this.isFollow = false;
@@ -101,7 +99,7 @@
                     this.style = {backgroundColor: "#CCC"}
                 }
             },
-            out(){
+            out() {
                 if (this.isFollow) {
                     this.Follow = this.followed;
                     this.style = {}

@@ -4,6 +4,7 @@
 
 <script>
     import AnswerList from "../components/AnswerList"
+
     export default {
         name: "newest",
         components: {

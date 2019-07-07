@@ -20,10 +20,10 @@
             <Col span="2">
             </Col>
             <Col span="8">
-                <Input search placeholder="搜索一下，遇见新鲜" size="default" class="search" v-model="search_text"/>
+                <Input search  @on-search="handleSearch" placeholder="搜索一下，遇见新鲜" size="default" class="search" v-model="search_text"/>
             </Col>
             <Col span="2">
-                <Button type="primary" class="question" @click="handleSearch">提问</Button>
+                <Button type="primary" class="question" @click="Question">提问</Button>
             </Col>
             <Col span="2">
             </Col>
@@ -78,12 +78,12 @@
                 userid: "",
                 head_sculpture: "",
                 tip: "",
-                search_text:""
+                search_text: ""
             }
         },
         computed: {
             isLogin() {
-                return this.$store.isLogin;
+                return this.$store.state.isLogin;
             }
         },
         methods: {
@@ -96,12 +96,15 @@
                     this.$router.push("/following")
                 }
             },
-            handleSearch(){
-                if (!this.search_text){
+            handleSearch() {
+                if (!this.search_text) {
                     this.$Message.error("请输入查询内容");
                 } else {
                     this.$router.push("/search/" + this.search_text)
                 }
+            },
+            Question(){
+
             }
         },
         mounted() {
@@ -113,6 +116,8 @@
                         this.userid = data.userid;
                         this.head_sculpture = data.head_sculpture;
                         this.tip = data.tip;
+                        this.$store.commit('setUsername', this.username);
+                        this.$store.commit('setUserID', this.userid);
                     }
                 })
             }

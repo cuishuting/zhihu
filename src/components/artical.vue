@@ -1,18 +1,18 @@
 <template>
     <Card style="width:50%;height:200px;margin-left:10%">
         <div class="artical" style="text-align:left">
-            <h1>BTS&CST</h1>
-            <p>content</p>
+            <h1>{{title}}</h1>
+            <p>{{content}}</p>
         </div>
         <div class="bottom">
-            <Button :size="buttonSize" icon="md-arrow-dropup" type="primary" @click="agree_count++" style="float:left">
+            <Button :size="buttonSize" icon="md-arrow-dropup" type="primary" @click="agree_num++" style="float:left">
                 赞同
             </Button>
             <br>
-            <div class="show_count"><input type="text" value="0" size="1" v-model="agree_count"
+            <div class="show_count"><input type="text" value="0" size="1" v-model="agree_num"
                                            style="border:transparent;background-color: #2d8cf0;text-align: center;color:white">
             </div>
-            <Button type="info" @click="agree_count--" style="float:left;margin-top: -21px;margin-left:40px;">👎
+            <Button type="info" @click="agree_num--" style="float:left;margin-top: -21px;margin-left:40px;">👎
             </Button>
 
         </div>
@@ -21,7 +21,7 @@
                 <div class="layout-nav">
                     <MenuItem name="1" >
                         <Icon type="ios-text" size="20"></Icon>
-                        <span v-on:click="seecomment()">{{comment_count}}条评论</span>
+                        <span v-on:click="seecomment()">{{comment_num}}条评论</span>
                     </MenuItem>
                     <MenuItem name="2">
                         <Icon type="ios-send" size="20"></Icon>
@@ -45,33 +45,35 @@
     import Button from 'iView';
     import Icon from 'iView';
     import Menu from 'iView';
-    import Comment_content from "@/components/comment_content";
+    import Comment_content from "./comment_content";
 
     export default {
         name: "artical",
-        components: {Comment_content},
+        props:['agree_count',
+            'comment_count',
+            'question_id',
+            'question_title',
+            'answer_id',
+            'answer_author',
+            'answer_author_id',
+            'answer_content',
+            'answer_author_head_sculpture',
+            'time',
+        ],
         data() {
             return {
-                agree_count: 0,
-                comment_count:0,
                 see_com:false,
-                question_id:'',
-                question_title:'',
-                answer_id:'',
-                answer_author:'',
-                answer_author_id: '',
-                answer_content:'',
-                answer_author_head_sculpture:'',
                 is_agree:0,
-                time:0,
-                start:0,
-                end:20,
+                title:this.question_title,
+                content:this.answer_content,
+                agree_num:this.agree_count,
             }
         },
         component: {
             Button,
             Icon,
             Menu,
+            comment_content,
         },
         methods: {
             get_init_agree_count() {

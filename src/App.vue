@@ -8,8 +8,6 @@
         <topguide/>
         <br/>
         <br/>
-        <artical_title/>
-<!--        <newest/>-->
        <router-view>
        </router-view>
     </div>

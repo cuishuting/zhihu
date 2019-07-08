@@ -63,8 +63,8 @@
                 }
             }, 100)
         },
-        computed:{
-            isLogin(){
+        computed: {
+            isLogin() {
                 return this.$store.state.isLogin
             }
         },
@@ -87,6 +87,7 @@
                         }
                     })
                     .catch((err) => {
+                        // eslint-disable-next-line no-console
                         console.log(err);
                         this.$Message.error("提交失败,请检查网络后再试...");
                     })

@@ -5,12 +5,12 @@
                 <MenuItem name="1">
                     最新
                 </MenuItem>
-                <MenuItem name="2">
+                <MenuItem name="0">
                     最热
                 </MenuItem>
             </Menu>
         </div>
-        <template v-if="selected==1">
+        <template v-if="selected">
             <Newest/>
         </template>
         <template v-else>
@@ -54,7 +54,8 @@
         box-shadow: 1px 1px 1px lightgray;
         border-radius: 4px;
     }
-    .index_header{
+
+    .index_header {
         z-index: -1;
     }
 </style>

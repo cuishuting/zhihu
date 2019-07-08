@@ -1,4 +1,4 @@
-export default{
+export default {
     state: {
         isLogin: false,
         username: '',
@@ -13,10 +13,10 @@ export default{
             state.username = '';
             state.userID = ''
         },
-        setUsername(state, name){
+        setUsername(state, name) {
             state.username = name;
         },
-        setUserID(state, id){
+        setUserID(state, id) {
             state.userID = id;
         }
     }

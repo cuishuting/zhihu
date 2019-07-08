@@ -1,7 +1,7 @@
 <template>
     <div class="index">
         <div class="index_header">
-            <Menu mode="horizontal" theme="light" active-name="1" width="auto" @on-select="select">
+            <Menu mode="horizontal" theme="light" :active-name="pos" width="auto" @on-select="select">
                 <MenuItem name="1">
                     最新
                 </MenuItem>
@@ -25,6 +25,16 @@
             return {
                 selected: '1',
             }
+        },
+        computed:{
+          pos(){
+              let path = this.$route.path.split("/");
+              if (path[path.length - 1] === "newest" || path.length === 2 || path[path.length - 1] === "/")
+                  return "1";
+              else if (path[path.length - 1] === "hottest")
+                  return "2";
+              else return ""
+          }
         },
         methods: {
             select(value) {

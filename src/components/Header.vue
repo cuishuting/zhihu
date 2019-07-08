@@ -122,6 +122,7 @@
                     this.axios.get("/api/logout").then((resp) => {
                         if (resp.data.success) {
                             this.$store.commit("logout");
+                            this.$router.push("/");
                         } else {
                             this.$Message.error("错误");
                         }

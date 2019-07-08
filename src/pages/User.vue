@@ -128,6 +128,9 @@
                         this.head_sculpture = response.head_sculpture;
                         this.intro = response.intro;
                         this.isFollow = response.isFollow;
+                        if (this.isFollow){
+                            this.Follow = this.followed;
+                        }
                     }
                 });
             },

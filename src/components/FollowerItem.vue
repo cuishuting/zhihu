@@ -44,6 +44,14 @@
             type() {
                 return this.isFollow ? "success" : "primary";
             },
+            isLogin() {
+                return this.$store.state.isLogin;
+            },
+        },
+        mounted(){
+            if (this.isFollow){
+                this.Follow = this.followed;
+            }
         },
         methods: {
             doFollow() {
@@ -52,7 +60,7 @@
                     this.$router.push("/login")
                 }
                 if (!this.isFollow) {
-                    this.axios.post("/api/follow", {"user_id": this.user_id}).then((resp) => {
+                    this.axios.post("/api/follow", {"user_id": this.userid}).then((resp) => {
                         let temp = resp.data;
                         if (temp.success) {
                             this.Follow = this.followed;
@@ -62,7 +70,7 @@
                         }
                     })
                 } else {
-                    this.axios.post("/api/unfollow", {"user_id": this.user_id}).then((resp) => {
+                    this.axios.post("/api/unfollow", {"user_id": this.userid}).then((resp) => {
                         let temp = resp.data;
                         if (temp.success) {
                             this.Follow = this.not_follow;

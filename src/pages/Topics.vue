@@ -1,6 +1,9 @@
 <template>
-    <div class="topic">
-        <span v-for="(item,key) in data" :key="key" class="topic_row"><TopicItem :data="item"></TopicItem><Divider/></span>
+    <div>
+        <Divider orientation="left"><Icon type="logo-twitch" size="35"/><span class="page_top">话题广场</span></Divider>
+        <div class="topic">
+            <span v-for="(item,key) in data" :key="key" class="topic_row"><TopicItem :data="item"></TopicItem><Divider/></span>
+        </div>
     </div>
 </template>
 
@@ -68,5 +71,8 @@
     .topic_row{
         float:left;
         width:50%;
+    }
+    .page_top{
+        font-size:30px;
     }
 </style>

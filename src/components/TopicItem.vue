@@ -46,5 +46,7 @@
     }
     .topic_text{
         text-align: left;
+        margin-left:20%;
+        padding:25px;
     }
 </style>

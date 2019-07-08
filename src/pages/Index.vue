@@ -10,12 +10,14 @@
                 </MenuItem>
             </Menu>
         </div>
-        <template v-if="selected">
-            <Newest/>
-        </template>
-        <template v-else>
-            <Hottest/>
-        </template>
+        <keep-alive>
+            <template v-if="selected === '1'">
+                <Newest/>
+            </template>
+            <template v-else>
+                <Hottest/>
+            </template>
+        </keep-alive>
     </div>
 </template>
 
@@ -27,7 +29,7 @@
         name: "Index",
         data() {
             return {
-                selected: 1,
+                selected: '1',
             }
         },
         components: {

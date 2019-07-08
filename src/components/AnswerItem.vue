@@ -133,12 +133,13 @@
                 }
             },
             agree(num) {
+                num = parseInt(num);
                 if (!this.isLogin) {
                     this.$Message.error("登陆才能点赞");
                     return;
                 }
                 let val;
-                if (num == this.is_agree) {
+                if (num === this.is_agree) {
                     val = 0;
                 } else {
                     val = num;
@@ -148,7 +149,12 @@
                     agree: val
                 }).then((resp) => {
                     if (resp.data.success) {
+                        if (this.is_agree === 1 && val === 0)
+                            this.agree_num--;
                         this.is_agree = val;
+                        if (this.is_agree === 1) {
+                            this.agree_num++
+                        }
                     } else {
                         this.$Message.error(resp.data.error);
                     }

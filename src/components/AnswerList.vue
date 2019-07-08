@@ -44,10 +44,12 @@
                 this.axios.get(this.api + '?start=' + this.start + '&end=' + this.end + this.more_data).then((response) => {
                     let temp = response.data;
                     if (temp.success) {
-                        this.data = temp.data;
                         this.hasMore = temp.hasMore;
                         this.start = this.end;
                         this.end = this.start + 10;
+                        for (let i = 0; i < temp.data.length; i++) {
+                            this.data.push(temp.data[i])
+                        }
                     } else {
                         this.$Message.error(temp.error);
                     }
@@ -91,7 +93,7 @@
         },
         mounted: function () {
             this.getAnswer(this.start, this.end)
-            this.fakeData();
+            // this.fakeData();
         }
     }
 </script>

@@ -3,7 +3,7 @@
         <div class="answer" style="text-align:left">
             <h2 class="question">{{title}}</h2>
             <div class="answer_content" v-if="!read_all">
-                <p><span>{{author_name}}</span><span>: </span>{{content_fragment}} <span @click="read_all=true"
+                <p><router-link :to="'/user/' + author_id">{{author_name}}</router-link><span>: </span ><span  @click="read_all=true">{{content_fragment}}</span> <span @click="read_all=true"
                                                                                          class="read">阅读全文<Icon
                         type="ios-arrow-down"/></span></p>
             </div>
@@ -133,12 +133,13 @@
                 }
             },
             agree(num) {
+                num = parseInt(num);
                 if (!this.isLogin) {
                     this.$Message.error("登陆才能点赞");
                     return;
                 }
                 let val;
-                if (num == this.is_agree) {
+                if (num === this.is_agree) {
                     val = 0;
                 } else {
                     val = num;
@@ -148,7 +149,12 @@
                     agree: val
                 }).then((resp) => {
                     if (resp.data.success) {
+                        if (this.is_agree === 1)
+                            this.agree_num--;
                         this.is_agree = val;
+                        if (this.is_agree === 1) {
+                            this.agree_num++
+                        }
                     } else {
                         this.$Message.error(resp.data.error);
                     }

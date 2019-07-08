@@ -11,6 +11,16 @@
         name: "Following",
         components: {
             AnswerList
+        },
+        computed: {
+            isLogin() {
+                return this.$store.state.isLogin;
+            }
+        },
+        mounted() {
+            if (!this.isLogin) {
+                this.$router.go(-1);
+            }
         }
     }
 </script>

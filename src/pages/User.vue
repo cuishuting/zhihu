@@ -34,10 +34,9 @@
         name: "User",
         data() {
             return {
-                success: false,
                 error: '',
                 username: '',
-                userid: '',
+                user_id: '',
                 head_sculpture: '',
                 intro: '',
                 isFollow: false,
@@ -54,19 +53,18 @@
                 return this.isFollow ? "success" : "primary";
             },
             isLogin() {
-                return this.$store.isLogin;
+                return this.$store.state.isLogin;
             },
         },
         mounted: function () {
-            this.fakeData();
-            this.axios.get('/api/user?user_id=' + this.$route.params.user_id).then((resp) => {
+            // this.fakeData();
+            this.axios.get('/api/user?user_id=' + this.$route.params.id).then((resp) => {
                 let response = resp.data;
-                this.success = response.success;
-                if (!this.success) {
+                if (!response.success) {
                     this.$Message.error(response.error);
                 } else {
                     this.username = response.username;
-                    this.userid = response.userid;
+                    this.user_id = response.userid;
                     this.head_sculpture = response.head_sculpture;
                     this.intro = response.intro;
                     this.isFollow = response.isFollow;
@@ -83,14 +81,29 @@
             },
             doFollow() {
                 if (!this.isLogin) {
-                    this.$Message.error("")
+                    this.$Message.error("登陆才能关注")
                 }
                 if (!this.isFollow) {
-                    this.axios.post("/api/follow", {})
+                    this.axios.post("/api/follow", {"user_id": this.user_id}).then((resp) => {
+                        let temp = resp.data;
+                        if (temp.success) {
+                            this.Follow = this.followed;
+                            this.isFollow = true;
+                        } else {
+                            this.$Message.error(temp.error);
+                        }
+                    })
                 } else {
-                    this.Follow = this.not_follow;
-                    this.isFollow = false;
-                    this.style = {}
+                    this.axios.post("/api/unfollow", {"user_id": this.user_id}).then((resp) => {
+                        let temp = resp.data;
+                        if (temp.success) {
+                            this.Follow = this.not_follow;
+                            this.isFollow = false;
+                            this.style = {}
+                        } else {
+                            this.$Message.error(temp.error);
+                        }
+                    })
                 }
             },
             over() {

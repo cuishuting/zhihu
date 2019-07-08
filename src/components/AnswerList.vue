@@ -6,12 +6,15 @@
                 <AnswerItem :data="item"></AnswerItem>
             </li>
         </ul>
-        <div v-if="data.length && hasMore" class="hint" @click="getAnswer()">
+        <Button long v-if="data.length && hasMore" class="hint" @click="getAnswer()">
             加载更多
+        </Button>
+        <div v-else-if="load" class="hint" style="width: 100%;text-align: center">
+            <Spin size="large"></Spin>
         </div>
-        <div v-else class="hint">
+        <Button long v-else class="hint" @click="getAnswer()">
             没有找到回答, 请稍后再试...
-        </div>
+        </Button>
     </div>
 </template>
 
@@ -32,29 +35,50 @@
                 data: [],
                 start: 0,
                 end: 20,
-                error: '',
                 hasMore: true,
+                load: true
             }
         },
         components: {
             AnswerItem,
         },
+        watch: {
+            more_data() {
+                this.reset();
+                this.getAnswer();
+            },
+            api() {
+                this.reset();
+                this.getAnswer();
+            }
+        },
         methods: {
+            reset() {
+                this.start = 0;
+                this.end = 20;
+                this.hasMore = true;
+                this.data = [];
+            },
             getAnswer() {
+                this.load = true;
                 this.axios.get(this.api + '?start=' + this.start + '&end=' + this.end + this.more_data).then((response) => {
                     let temp = response.data;
                     if (temp.success) {
-                        this.data = temp.data;
                         this.hasMore = temp.hasMore;
                         this.start = this.end;
                         this.end = this.start + 10;
+                        for (let i = 0; i < temp.data.length; i++) {
+                            this.data.push(temp.data[i])
+                        }
                     } else {
                         this.$Message.error(temp.error);
                     }
+                    this.load = false;
                 }).catch((err) => {
                     // eslint-disable-next-line no-console
                     console.log(err);
                     this.$Message.error("提交失败,请检查网络后再试...");
+                    this.load = false;
                 })
             },
             fakeData() {
@@ -91,14 +115,14 @@
         },
         mounted: function () {
             this.getAnswer(this.start, this.end)
-            this.fakeData();
+            // this.fakeData();
         }
     }
 </script>
 
 <style scoped>
     .hint {
-        margin: 20px;
+        margin: 20px auto;
         font-size: 14px;
     }
 

@@ -15,7 +15,7 @@
         components: {
             Header,
         },
-        mounted() {
+        beforeCreate() {
             this.axios.get("/api/islogin").then((resp) => {
                 let data = resp.data;
                 if (data.islogin){
@@ -38,7 +38,7 @@
 
     html{
         margin: 0px;
-        min-width: 1300px;
+        min-width: 1100px;
         background-color: #f6f6f6;
     }
 </style>

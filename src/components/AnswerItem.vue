@@ -3,7 +3,7 @@
         <div class="answer" style="text-align:left">
             <h2 class="question">{{title}}</h2>
             <div class="answer_content" v-if="!read_all">
-                <p><span>{{author_name}}</span><span>: </span>{{content_fragment}} <span @click="read_all=true"
+                <p><router-link :to="'/user/' + author_id">{{author_name}}</router-link><span>: </span ><span  @click="read_all=true">{{content_fragment}}</span> <span @click="read_all=true"
                                                                                          class="read">阅读全文<Icon
                         type="ios-arrow-down"/></span></p>
             </div>
@@ -149,7 +149,7 @@
                     agree: val
                 }).then((resp) => {
                     if (resp.data.success) {
-                        if (this.is_agree === 1 && val === 0)
+                        if (this.is_agree === 1)
                             this.agree_num--;
                         this.is_agree = val;
                         if (this.is_agree === 1) {

@@ -4,7 +4,7 @@
             <Col span="8">
                 <div class="layout_logo"><p>LOGO</p></div>
                 <div class="layout_nav">
-                    <Menu mode="horizontal" theme="light" active-name="1" width="auto" @on-select="select">
+                    <Menu mode="horizontal" theme="light" :active-name="pos" width="auto" @on-select="select">
                         <MenuItem name="1">
                             首页
                         </MenuItem>
@@ -20,7 +20,8 @@
             <Col span="2">
             </Col>
             <Col span="8">
-                <Input search  @on-search="handleSearch" placeholder="搜索一下，遇见新鲜" size="default" class="search" v-model="search_text"/>
+                <Input search @on-search="handleSearch" placeholder="搜索一下，遇见新鲜" size="default" class="search"
+                       v-model="search_text"/>
             </Col>
             <Col span="2">
                 <Button type="primary" class="question" @click="Question">提问</Button>
@@ -28,12 +29,24 @@
             <Col span="2">
             </Col>
             <template v-if="isLogin">
-                <Col span="4">
-                    <div class="head_sculpture">
-                        <Badge :count="tip">
-                            <Avatar :src="head_sculpture"/>
-                        </Badge>
-                    </div>
+                <Col span="2" class="head_sculpture tip">
+                    <Badge :count="tip">
+                        <Avatar icon="md-notifications" class="tips"/>
+                    </Badge>
+                </Col>
+                <Col span="1">
+                    <Dropdown>
+                        <div class="head_sculpture">
+                            <Avatar shape="square" :src="head_sculpture"/>
+                        </div>
+                        <DropdownMenu slot="list">
+                            <DropdownItem>驴打滚</DropdownItem>
+                            <DropdownItem>炸酱面</DropdownItem>
+                            <DropdownItem disabled>豆汁儿</DropdownItem>
+                            <DropdownItem>冰糖葫芦</DropdownItem>
+                            <DropdownItem divided>北京烤鸭</DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
                 </Col>
             </template>
             <template v-else>
@@ -77,20 +90,34 @@
                 username: "",
                 userid: "",
                 head_sculpture: "",
-                tip: "",
-                search_text: ""
+                tip: 0,
+                search_text: "",
             }
         },
         computed: {
             isLogin() {
                 return this.$store.state.isLogin;
+            },
+            pos() {
+                if (this.$route.path === "/index" || this.$route.path === "/")
+                    return "1";
+                else if (this.$route.path === "/topic")
+                    return "2";
+                else if (this.$route.path === "/following")
+                    return "3";
+                else return ""
+            }
+        },
+        watch: {
+            isLogin() {
+                if (this.isLogin) this.get_self_info();
             }
         },
         methods: {
             select(value) {
-                if (value == 1) {
+                if (value === '1') {
                     this.$router.push("/index")
-                } else if (value == 2) {
+                } else if (value === '2') {
                     this.$router.push("/topic")
                 } else {
                     this.$router.push("/following")
@@ -103,24 +130,27 @@
                     this.$router.push("/search/" + this.search_text)
                 }
             },
-            Question(){
+            Question() {
 
+            },
+            get_self_info() {
+                if (this.isLogin) {
+                    this.axios.get('/api/self_info').then((resp) => {
+                        let data = resp.data;
+                        if (data.success) {
+                            this.username = data.username;
+                            this.userid = data.userid;
+                            this.head_sculpture = data.head_sculpture;
+                            this.tip = data.tip;
+                            this.$store.commit('setUsername', this.username);
+                            this.$store.commit('setUserID', this.userid);
+                        }
+                    })
+                }
             }
         },
         mounted() {
-            if (this.isLogin) {
-                this.axios.get('/api/self_info').then((resp) => {
-                    let data = resp.data;
-                    if (data.success) {
-                        this.username = data.username;
-                        this.userid = data.userid;
-                        this.head_sculpture = data.head_sculpture;
-                        this.tip = data.tip;
-                        this.$store.commit('setUsername', this.username);
-                        this.$store.commit('setUserID', this.userid);
-                    }
-                })
-            }
+            this.get_self_info();
         }
     }
 </script>
@@ -147,11 +177,12 @@
         top: 0px;
         border-bottom: lightgray solid 1px;
         height: 80px;
-        overflow: hidden;
+        overflow: visible;
         box-shadow: 1px 1px 1px lightgray;
         font-size: 16px;
         background-color: #FFF;
         z-index: 1000;
+        min-width: 1000px;
     }
 
     .search {
@@ -177,5 +208,16 @@
 
     .ivu-menu-horizontal.ivu-menu-light:after {
         height: 0px;
+    }
+
+    .tips {
+        background-color: #FFF;
+        color: #8590a6;
+        font-size: 26px;
+    }
+
+    .tip {
+        text-align: right;
+        margin-right: 15px;
     }
 </style>

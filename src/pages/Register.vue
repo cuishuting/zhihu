@@ -20,18 +20,18 @@
             <div v-if="status" style="margin-bottom: 10px">两次密码不相等</div>
             <FormItem prop="captcha">
                 <Row>
-                    <Col span="16">
+                    <Col span="11">
                         <Input type="text" v-model="formInline.captcha" placeholder="验证码">
                             <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
                         </Input>
                     </Col>
-                    <Col span="8">
-                        <img :src="cap_url" @click="getCheckCode()">
+                    <Col span="13">
+                        <img class="img-size" :src="cap_url" @click="getCheckCode()">
                     </Col>
                 </Row>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">注册</Button>
+                <Button type="primary" @click="handleSubmit(formInline)">注册</Button>
             </FormItem>
         </Form>
     </div>
@@ -114,5 +114,10 @@
         box-shadow: 1px 1px 1px lightgray;
         border-radius: 10px;
         padding: 30px;
+    }
+
+    .img-size {
+        height: 32px;
+        width: 128px;
     }
 </style>

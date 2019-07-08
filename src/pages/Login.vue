@@ -52,7 +52,7 @@
                         if (temp.success) {
                             this.$Message.success('Success!');
                             this.$store.commit('login');
-                            this.$router.push('/index')
+                            this.$router.go(-1);
                         } else {
                             this.$Message.error(temp.error);
                         }

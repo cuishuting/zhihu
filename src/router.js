@@ -5,6 +5,7 @@ import Register from './pages/Register'
 import Search from './pages/Search';
 import Following from './pages/Following';
 import FollowersList from './pages/FollowersList';
+import Topics from './pages/Topics';
 export default [
     {
         path: '/',
@@ -37,5 +38,10 @@ export default [
     {
         path:'/followers_list',
         component:FollowersList
-    }
+    },
+    {
+        path:'/topic',
+        component:Topics
+    },
+
 ]

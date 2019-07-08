@@ -6,6 +6,7 @@ import Search from './pages/Search';
 import Following from './pages/Following';
 import FollowersList from './pages/FollowersList';
 import Topics from './pages/Topics';
+import DetailedTopic from "@/pages/DetailedTopic";
 export default [
     {
         path: '/',
@@ -43,5 +44,9 @@ export default [
         path:'/topic',
         component:Topics
     },
+    {
+        path:'/detailed_topic/:topic_id',
+        component:DetailedTopic
+    }
 
 ]

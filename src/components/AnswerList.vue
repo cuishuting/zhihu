@@ -3,7 +3,7 @@
         <ul v-if="data.length">
 
             <li v-for="(item,key) in data" :key="key" style="margin-top: 3px">
-                <AnswerItem :data="item"></AnswerItem>
+                <AnswerItem :data="item" :preview="preview"></AnswerItem>
             </li>
         </ul>
         <Button long v-if="data.length && hasMore" class="hint" @click="getAnswer()">
@@ -28,6 +28,10 @@
             more_data: {
                 type: String,
                 default: ""
+            },
+            preview: {
+                type: Number,
+                default: 200
             }
         },
         data() {

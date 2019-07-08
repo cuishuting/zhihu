@@ -1,7 +1,7 @@
 <template>
-    <div class="search">
-        <div class="search_header">
-            <Menu mode="horizontal" theme="light" active-name="1" width="auto" @on-select="select">
+    <div class="index">
+        <div class="index-header">
+            <Menu mode="horizontal" theme="light" :active-name="pos" width="auto" @on-select="select">
                 <MenuItem name="1">
                     回答
                 </MenuItem>
@@ -10,50 +10,46 @@
                 </MenuItem>
             </Menu>
         </div>
-        <template v-if="selected==1">
-            <SearchAnswer :text="this.$route.params.str"/>
-        </template>
-        <template v-else>
-
-        </template>
+        <router-view>
+        </router-view>
     </div>
 </template>
 
 <script>
-    import SearchAnswer from '../components/SearchAnswer'
 
     export default {
         name: "Search",
-        components: {
-            SearchAnswer
-        },
         data() {
             return {
                 selected: 1,
             }
         },
+        computed: {
+            pos() {
+                let path = this.$route.path.split("/");
+                if (path[path.length - 1] === "answers")
+                    return "1";
+                else if (path[path.length - 1] === "users")
+                    return "2";
+                else return ""
+            },
+            text() {
+                return this.$route.params.str
+            }
+        },
         methods: {
             select(value) {
                 this.selected = value;
+                if (this.selected === "1") {
+                    this.$router.push("/search/" + this.text + "/answers")
+                } else {
+                    this.$router.push("/search/" + this.text + "/users")
+                }
             }
         }
     }
 </script>
 
 <style scoped>
-    .search_header {
-        width: 100%;
-    }
 
-    .search {
-        width: 60%;
-        margin-left: 10%;
-        border: 1px solid lightgray;
-        box-shadow: 1px 1px 1px lightgray;
-        border-radius: 4px;
-    }
-
-    .search_header {
-        z-index: -1;
-    }
 </style>

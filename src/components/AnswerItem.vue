@@ -74,20 +74,24 @@
         components: {
             Comment
         },
-        props: [
-            'data'
-        ],
+        props: {
+            data: Object,
+            preview: {
+                type: Number,
+                default: 200
+            }
+        },
         computed: {
             content_fragment() {
-                if (this.content.length > 200)
-                    return this.content.substr(0, 200) + '...';
+                if (this.content.length > this.preview)
+                    return this.content.substr(0, this.preview) + '...';
                 else return this.content;
             },
             isLogin() {
                 return this.$store.state.isLogin;
             },
             time() {
-                let date = new Date(this.timeslot * 1000);
+                let date = new Date(this.timeslot);
                 let year = date.getFullYear();
                 let day = date.getDate();
                 let month = date.getMonth() + 1;

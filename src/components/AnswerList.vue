@@ -2,6 +2,7 @@
     <div class="list">
         <ul v-if="data.length">
             <li v-for="(item,key) in data" :key="key" style="margin-top: 3px">
+                <blog-post v-on:delete_this_answer="items.splice(key,1)"></blog-post>
                 <AnswerItem :data="item" :preview="preview"></AnswerItem>
             </li>
         </ul>

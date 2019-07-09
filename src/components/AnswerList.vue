@@ -2,8 +2,8 @@
     <div class="list">
         <ul v-if="data.length">
             <li v-for="(item,key) in data" :key="key" style="margin-top: 3px">
-                <blog-post v-on:delete_this_answer="items.splice(key,1)"></blog-post>
-                <AnswerItem :data="item" :preview="preview"></AnswerItem>
+                <blog-post v-on="delete_this_answer(key)"></blog-post>
+                <AnswerItem :data="item" :preview="preview" v-if="this.delete"></AnswerItem>
             </li>
         </ul>
         <Button long v-if="data.length && hasMore" class="hint" @click="getAnswer()">
@@ -40,7 +40,8 @@
                 start: 0,
                 end: 20,
                 hasMore: true,
-                load: true
+                load: true,
+                delete:true,
             }
         },
         components: {
@@ -85,6 +86,21 @@
                     this.load = false;
                 })
             },
+            delete_this_answer(key) {
+                this.post('/api/delete_answer',{
+                    'answer_id':this.answer_id,
+                },{timeout: 2500}).then((resp)=>{
+                    if(!resp.data.success){
+                        this.$Message.error(resp.data.error);
+                    }
+                    else {
+                        this.items.splice(key,1);
+                        this.delete=false;
+                    }
+                })
+            },
+
+
             fakeData() {
                 let data1 = {
                     question_id: "123",

@@ -7,6 +7,7 @@ import Following from './pages/Following';
 import FollowersList from './pages/FollowersList';
 import Topics from './pages/Topics';
 import DetailedTopic from "@/pages/DetailedTopic";
+import Example from "./pages/Example";
 export default [
     {
         path: '/',
@@ -47,6 +48,10 @@ export default [
     {
         path:'/detailed_topic/:topic_id',
         component:DetailedTopic
+    },
+    {
+        path:'/example',
+        component:Example,
     }
 
 ]

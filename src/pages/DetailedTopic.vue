@@ -33,7 +33,8 @@
                         this.topic_name=resp.topic_name;
                         this.description=resp.description;
                         this.topic_pic=resp.topic_pic;
-                        //下面关于话题回答的部分没有写
+                        this.hasMore=resp.hasMore;
+                        this.data=resp.data;
                     }
                 })
             },

@@ -39,6 +39,7 @@
 
 <script>
     export default {
+        name: "Register",
         data() {
             return {
                 status: false,
@@ -58,10 +59,13 @@
             }
         },
         mounted() {
-            this.getCheckCode()
-            if (this.$store.state.isLogin) {
-                this.$router.push("/")
-            }
+            this.getCheckCode();
+            setTimeout(() => {
+                if (this.$store.state.isLogin) {
+                    this.$router.push("/")
+                }
+            }, 100);
+
         },
         methods: {
             handleSubmit(name) {

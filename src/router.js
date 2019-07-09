@@ -4,18 +4,41 @@ import User from './pages/User';
 import Register from './pages/Register'
 import Search from './pages/Search';
 import Following from './pages/Following';
-import FollowersList from './pages/FollowersList';
 import Topics from './pages/Topics';
 import DetailedTopic from "@/pages/DetailedTopic";
 import Example from "./pages/Example";
+import Newest from './components/Newest'
+import Hottest from './components/Hottest'
+import UserAnswers from './components/UserAnswers'
+import UserFollow from './components/UserFollow'
+import UserFans from './components/UserFans'
+import SearchAnswer from './components/SearchAnswer'
+import SearchUser from "./components/SearchUser";
+import ModifyPassword from "./pages/ModifyPassword"
 export default [
     {
         path: '/',
-        component: Index
+        component: Index,
+        children: [
+            {
+                path: '',
+                component: Newest
+            }
+        ]
     },
     {
         path: '/search/:str',
-        component: Search
+        component: Search,
+        children: [
+            {
+                path: "answers",
+                component: SearchAnswer
+            },
+            {
+                path: "users",
+                component: SearchUser
+            }
+        ]
     },
     {
         path: '/following',
@@ -31,27 +54,57 @@ export default [
     },
     {
         path: '/index',
-        component: Index
+        component: Index,
+        children: [
+            {
+                path: '',
+                component: Newest
+            },
+            {
+                path: 'newest',
+                component: Newest
+            },
+            {
+                path: 'hottest',
+                component: Hottest
+            }
+        ]
     },
     {
-        path:'/user/:id',
-        component:User
+        path: '/user/:id',
+        component: User,
+        children: [
+            {
+                path: "",
+                component: UserAnswers
+            },
+            {
+                path: "answers",
+                component: UserAnswers
+            },
+            {
+                path: "follow",
+                component: UserFollow
+            },
+            {
+                path: "fans",
+                component: UserFans
+            }
+        ]
     },
     {
-        path:'/followers_list',
-        component:FollowersList
-    },
-    {
-        path:'/topic',
-        component:Topics
+        path: '/topic',
+        component: Topics
     },
     {
         path:'/detailed_topic/:topic_id',
         component:DetailedTopic
     },
     {
-        path:'/example',
-        component:Example,
-    }
-
+        path: '/example',
+        component: Example,
+    },
+    {  path: '/modify_password',
+        component: ModifyPassword
+    },
 ]

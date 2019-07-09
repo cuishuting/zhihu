@@ -1,5 +1,5 @@
 <template>
-    <div class="following">
+    <div class="index">
         <AnswerList api="/api/follows"></AnswerList>
     </div>
 </template>
@@ -19,18 +19,11 @@
         },
         mounted() {
             if (!this.isLogin) {
-                this.$router.go(-1);
+                this.$router.push("/login");
             }
         }
     }
 </script>
 
 <style scoped>
-    .following {
-        width: 60%;
-        margin-left: 10%;
-        border: 1px solid lightgray;
-        box-shadow: 1px 1px 1px lightgray;
-        border-radius: 4px;
-    }
 </style>

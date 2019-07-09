@@ -1,8 +1,8 @@
 <template>
-    <Card style="width:100%">
-        <div style="text-align:left">
-            <h1>{{question_title}}</h1>
-            <h3 class="subtext">{{time}}+'•'+{{answer_count}}+'个回答'+</h3>
+    <Card class="question">
+        <div class="question_content">
+            <h1 class="title">BTS</h1>
+            <h3 class="subtext">2019-7-9 11:18:32 • 10个回答</h3>
         </div>
     </Card>
 </template>
@@ -13,16 +13,14 @@
         props:['data'],
         data(){
             return{
-                question_id:'',
-                question_title:'',
-                answer_count:0,
+                question_id:this.data.question_id,
+                question_title:this.data.question_title,
+                answer_count:this.data.answer_count,
+                timeslot:this.data.time,
             }
         },
-        mounted:function(){
-            this.question_id=this.data.question_id;
-            this.question_title=this.data.question_title;
-            this.answer_count=this.data.answer_count;
-        },
+
+
         computed:{
             time() {
                 let date = new Date(this.timeslot * 1000);
@@ -41,5 +39,22 @@
 <style scoped>
     .subtext{
         color:grey;
+    }
+    .question{
+        width:90%;
+        margin-left:5%;
+        margin-right:5%;
+        height:120px;
+    }
+    .question_content{
+        text-align: left;
+    }
+    .title{
+        font-size:30px;
+    }
+    .subtext{
+        margin-top: 10px;
+        margin-bottom:-10px;
+        font-size:20px;
     }
 </style>

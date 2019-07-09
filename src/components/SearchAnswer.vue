@@ -7,9 +7,11 @@
 
     export default {
         name: "SearchAnswer",
-        props: [
-            "text"
-        ],
+        computed:{
+            text(){
+                return this.$route.params.str;
+            }
+        },
         components: {
             AnswerList
         }

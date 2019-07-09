@@ -13,9 +13,7 @@
         components: {QuestionTitle,Question},
         data() {
             return{
-               question_title:'',
-               answer_count:0,
-               data:[],
+                data :{},
             }
         },
         methods:{
@@ -23,6 +21,7 @@
                 this.data.question_title='BTS';
                 this.data.answer_count=10;
                 this.data.question_id='1';
+                this.data.time=new Date().getTime();
             }
         },
         mounted:function(){

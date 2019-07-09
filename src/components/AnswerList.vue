@@ -117,7 +117,7 @@
             }
         },
         mounted: function () {
-            this.getAnswer(this.start, this.end)
+            this.getAnswer(this.start, this.end);
             this.fakeData();
         }
     }

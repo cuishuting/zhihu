@@ -62,7 +62,7 @@
             </Row>
         </div>
         <div v-if="see_com">
-            <CommentList></CommentList>
+            <CommentList :answer_id="answer_id" @add-comment="comment_num = $event"></CommentList>
         </div>
 
     </Card>

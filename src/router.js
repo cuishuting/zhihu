@@ -17,6 +17,7 @@ import SearchUser from "./components/SearchUser";
 import ModifyPassword from "./pages/ModifyPassword";
 import QuestionDetailed from "./pages/QuestionDetailed";
 import QuestionList from './components/QuestionList'
+import AddQuestion from "./pages/AddQuestion"
 
 export default [
     {
@@ -117,5 +118,9 @@ export default [
     {
         path:'/question/:id',
         component: QuestionDetailed
+    },
+    {
+        path:'/ask',
+        component: AddQuestion
     }
 ]

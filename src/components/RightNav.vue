@@ -15,12 +15,12 @@
                     </a>
                 </Col>
                 <Col span="8">
-                    <a class="add-item">
+                    <router-link class="add-item" to="/ask">
                         <div class="add-icon">
                             <Icon type="ios-search"/>
                         </div>
                         <div class="add-title">提问题</div>
-                    </a>
+                    </router-link>
                 </Col>
                 <Col span="8">
                     <a class="add-item">

@@ -156,7 +156,7 @@
                 }
             },
             Question() {
-
+                this.$router.push("/ask")
             },
             get_self_info() {
                 if (this.isLogin) {

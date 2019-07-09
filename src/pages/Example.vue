@@ -1,16 +1,14 @@
 <template>
     <div>
-        <QuestionTitle></QuestionTitle>
-        <Question :data=this.data></Question>
+        <QuestionDetailed></QuestionDetailed>
     </div>
 </template>
 
 <script>
-    import QuestionTitle from "@/components/QuestionTitle";
-    import Question from '../components/Question';
+    import QuestionDetailed from "@/components/QuestionDetailed";
     export default {
         name: "Example",
-        components: {QuestionTitle,Question},
+        components: {QuestionDetailed},
         data() {
             return{
                 data :{},

@@ -46,6 +46,11 @@
         methods: {
             referComment() {
                 this.search = !this.search;
+            },
+            sendComment(){
+                this.axios.post("/api/send_comment", {
+
+                })
             }
         }
     }

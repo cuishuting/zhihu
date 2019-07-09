@@ -1,15 +1,14 @@
 <template>
     <div class="list">
         <ul v-if="data.length">
-
             <li v-for="(item,key) in data" :key="key" style="margin-top: 3px">
-                <AnswerItem :data="item"></AnswerItem>
+                <AnswerItem :data="item" :preview="preview"></AnswerItem>
             </li>
         </ul>
         <Button long v-if="data.length && hasMore" class="hint" @click="getAnswer()">
             加载更多
         </Button>
-        <div v-else-if="load" class="hint" style="width: 100%;text-align: center">
+        <div v-else-if="load" class="hint" style="width: 32px;">
             <Spin size="large"></Spin>
         </div>
         <Button long v-else class="hint" @click="getAnswer()">
@@ -28,6 +27,10 @@
             more_data: {
                 type: String,
                 default: ""
+            },
+            preview: {
+                type: Number,
+                default: 200
             }
         },
         data() {
@@ -115,15 +118,16 @@
         },
         mounted: function () {
             this.getAnswer(this.start, this.end)
-            // this.fakeData();
+            this.fakeData();
         }
     }
 </script>
 
-<style scoped>
+<style>
     .hint {
         margin: 20px auto;
         font-size: 14px;
+        width: auto;
     }
 
     ul li {

@@ -3,9 +3,14 @@
         <div class="answer" style="text-align:left">
             <h2 class="question">{{title}}</h2>
             <div class="answer_content" v-if="!read_all">
-                <p><router-link :to="'/user/' + author_id">{{author_name}}</router-link><span>: </span ><span  @click="read_all=true">{{content_fragment}}</span> <span @click="read_all=true"
-                                                                                         class="read">阅读全文<Icon
-                        type="ios-arrow-down"/></span></p>
+                <p class="content">
+                    <router-link :to="'/user/' + author_id">
+                        {{author_name}}
+                    </router-link>
+                    <span>: </span>
+                    <span @click="read_all=true">{{content_fragment}}</span>
+                    <span @click="read_all=true" class="read">阅读全文<Icon type="ios-arrow-down"/></span>
+                </p>
             </div>
             <div v-else>
                 <div class="author">
@@ -57,7 +62,7 @@
             </Row>
         </div>
         <div v-if="see_com">
-            <Comment></Comment>
+            <CommentList></CommentList>
         </div>
 
     </Card>
@@ -67,27 +72,31 @@
     import Button from 'iview';
     import Icon from 'iview';
     import Menu from 'iview';
-    import Comment from "./Comment";
+    import CommentList from "./CommentList"
 
     export default {
         name: "AnswerItem",
         components: {
-            Comment
+            CommentList
         },
-        props: [
-            'data'
-        ],
+        props: {
+            data: Object,
+            preview: {
+                type: Number,
+                default: 200
+            }
+        },
         computed: {
             content_fragment() {
-                if (this.content.length > 200)
-                    return this.content.substr(0, 200) + '...';
+                if (this.content.length > this.preview)
+                    return this.content.substr(0, this.preview) + '...';
                 else return this.content;
             },
             isLogin() {
                 return this.$store.state.isLogin;
             },
             time() {
-                let date = new Date(this.timeslot * 1000);
+                let date = new Date(this.timeslot);
                 let year = date.getFullYear();
                 let day = date.getDate();
                 let month = date.getMonth() + 1;
@@ -240,6 +249,9 @@
     .content {
         margin-top: 10px;
         word-wrap: break-word;
+        word-break: break-all;
+        line-height: 1.67;
+        font-size: 15px;
     }
 
     .read {

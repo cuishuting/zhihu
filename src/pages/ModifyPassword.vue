@@ -1,35 +1,37 @@
 <template>
-    <div class="change_password">
-        <Form ref="formInline" :model="formInline" :rules="ruleInline">
+    <div class="register">
+        <h1 style="margin-bottom: 20px">修改密码</h1>
+        <Form ref="formInline" :model="formInline">
             <FormItem prop="user">
-                <Input type="text" v-model="formInline.user" placeholder="用户名">
-                    <Icon type="ios-person-outline" slot="prepend"></Icon>
-                </Input>
-            </FormItem>
-            <FormItem prop="old_password">
-                <Input type="password" v-model="formInline.old_password" placeholder="请输入原密码">
+                <Input type="password" v-model="formInline.old_password" placeholder="旧密码">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
-            <FormItem prop="new_password">
-                <Input type="password" v-model="formInline.new_password" placeholder="请输入新密码">
+            <FormItem prop="password">
+                <Input type="password" v-model="formInline.password1" placeholder="新密码">
                     <Icon type="ios-lock-outline" slot="prepend"></Icon>
                 </Input>
             </FormItem>
+            <FormItem prop="password2">
+                <Input type="password" v-model="formInline.password2" placeholder="确认密码" @on-blur="checkPassword">
+                    <Icon type="ios-lock-outline" slot="prepend"></Icon>
+                </Input>
+            </FormItem>
+            <div v-if="status" style="margin-bottom: 10px">两次密码不相等</div>
             <FormItem prop="captcha">
                 <Row>
-                    <Col span="16">
+                    <Col span="11">
                         <Input type="text" v-model="formInline.captcha" placeholder="验证码">
                             <Icon type="ios-bookmark-outline" slot="prepend"></Icon>
                         </Input>
                     </Col>
-                    <Col span="8">
-                        <img :src="cap_url" @click="getCheckCode()">
+                    <Col span="13">
+                        <img class="img-size" :src="cap_url" @click="getCheckCode()">
                     </Col>
                 </Row>
             </FormItem>
             <FormItem>
-                <Button type="primary" @click="handleSubmit('formInline')">Submit</Button>
+                <Button type="primary" @click="handleSubmit(formInline)">确认</Button>
             </FormItem>
         </Form>
     </div>
@@ -40,47 +42,42 @@
         name: "ModifyPassword",
         data() {
             return {
+                status: false,
                 cap_url: "",
                 formInline: {
-                    user: '',
                     old_password: '',
-                    new_password: '',
+                    password1: '',
+                    password2: '',
                     captcha: '',
                 },
                 ruleInline: {
-                    user: [
-                        {required: true}
-                    ],
-                }
+
+                },
+                url: "/api/change_password"
             }
         },
         mounted() {
+            this.getCheckCode();
             setTimeout(() => {
-                if (this.isLogin) {
-                    this.getCheckCode();
-                } else {
-                    this.$router.push('/isLogin')
+                if (!this.$store.state.isLogin) {
+                    this.$router.push("/")
                 }
             }, 100)
-        },
-        computed: {
-            isLogin() {
-                return this.$store.state.isLogin
-            }
+
         },
         methods: {
             handleSubmit(name) {
                 this.axios.post(this.url, {
-                    "old_password": name.old_password,
-                    "new_password": name.new_password,
+                    "new_password": name.password1,
                     "captcha": name.captcha,
-                    "username": name.user,
+                    "old_password": name.old_password,
                 }, {timeout: 2500})
                     .then((resp) => {
                         let temp = resp.data;
                         if (temp.success) {
                             this.$Message.success('Success!');
-                            // this.$router.push('/isLogin')
+                            this.$store.commit("logout");
+                            this.$router.push("/login");
                         } else {
                             this.$Message.error(temp.error);
                             this.getCheckCode();
@@ -91,6 +88,13 @@
                         console.log(err);
                         this.$Message.error("提交失败,请检查网络后再试...");
                     })
+            },
+            checkPassword() {
+                if (this.formInline.password1 === this.formInline.password2) {
+                    this.status = false;
+                } else {
+                    this.status = true;
+                }
             },
             getURL() {
                 return "/api/get_captcha?time=" + new Date().getTime()
@@ -103,9 +107,20 @@
 </script>
 
 <style scoped>
-    .change_password {
-        margin: auto;
+
+    .register {
         width: 300px;
-        height: 200px;
+        margin: 50px auto;
+        background-color: #FFF;
+        color: #175199;
+        border: 1px solid lightgray;
+        box-shadow: 1px 1px 1px lightgray;
+        border-radius: 10px;
+        padding: 30px;
+    }
+
+    .img-size {
+        height: 32px;
+        width: 128px;
     }
 </style>

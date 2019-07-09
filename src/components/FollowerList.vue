@@ -1,68 +1,82 @@
-<template>
+<template class="list">
     <ul>
         <li v-for="(item,key) in data" :key="key">
-            <Followers :data="item"></Followers>
+            <FollowerItem :data="item"></FollowerItem>
         </li>
     </ul>
 </template>
 
 <script>
-    import Followers from './Followers';
+    import FollowerItem from './FollowerItem';
+
     export default {
         name: "FollowerList",
-        components:{
-            Followers,
+        components: {
+            FollowerItem,
         },
-        props:[
-            'user_id',
-        ],
-        data(){
-          return {
-              data:[],
-              success:false,
-              error:'',
-          }
+        props: {
+            api: String,
+            pro: {
+                type:String,
+                default:""
+            }
         },
-        methods:{
+        data() {
+            return {
+                data: [],
+            }
+        },
+        watch: {
+            // eslint-disable-next-line no-unused-vars
+            '$route'(to, from) {
+                this.getFollowers()
+            }
+        },
+        methods: {
             fakeData() {
-                let data1={
-                    username:'cuishuting',
-                    head_sculpture:'https://i.loli.net/2017/08/21/599a521472424.jpg',
-                    intro:'这里是个人简介的部分啊啊啊啊',
-                    answer_count:10,
-                    followers_count:30,
-                    isFollow:false,
+                let data1 = {
+                    username: 'cuishuting',
+                    head_sculpture: 'https://i.loli.net/2017/08/21/599a521472424.jpg',
+                    intro: '这里是个人简介sadddddddddddddddddddddddddddddddddddddddddddddddd的dassssssssssssssssssssssssss部分啊啊啊啊',
+                    answer_count: 10,
+                    followers_count: 30,
+                    isFollow: false,
                 };
-                let data2={
-                    username:'cuishuting',
-                    head_sculpture:'https://i.loli.net/2017/08/21/599a521472424.jpg',
-                    intro:'这里是个人简介的部分啊啊啊啊',
-                    answer_count:10,
-                    followers_count:30,
-                    isFollow:false,
+                let data2 = {
+                    username: 'cuishuting',
+                    head_sculpture: 'https://i.loli.net/2017/08/21/599a521472424.jpg',
+                    intro: '这里是个人简介的部分啊啊啊啊',
+                    answer_count: 10,
+                    followers_count: 30,
+                    isFollow: false,
                 };
                 this.data.push(data1);
                 this.data.push(data2);
             },
-            get_followers_info(){
-                this.axios.get('/api/get_followees'+ '?user_id='+this.user_id).then((response)=>{
-                    this.success=response.data.success;
-                    if(!this.success){
+            getFollowers() {
+                this.axios.get(this.api + '?user_id=' + this.$route.params.id + this.pro).then((response) => {
+                    if (!response.data.success) {
                         this.$Message.error(response.data.error);
-                    }
-                    else {
-                        this.data=response.data.data;
+                    } else {
+                        this.data = response.data.data;
                     }
                 })
             }
         },
-        mounted:function(){
-            this.fakeData();
+        mounted: function () {
+            // this.fakeData();
+            this.getFollowers()
         }
 
     }
 </script>
 
 <style scoped>
+    ul li {
+        list-style: none;
+    }
 
+    .list {
+        width: 100%;
+    }
 </style>

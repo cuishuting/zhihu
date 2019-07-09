@@ -1,29 +1,36 @@
 <template>
-    <Card class="top_question">
-        <div>
-            <div class="content">
-                <ul>
-                    <li v-for="(item,key) in topics" :key="key" class="topicList"><router-link :to="'/detailed_topic/'+item.topic_id"><Button type="primary" shape="circle" size="large">{{item.topic}}</Button></router-link></li>
+    <div class="whole">
+        <Card class="top_question">
+            <div>
+                <div class="content">
+                    <ul>
+                        <li v-for="(item,key) in topics" :key="key" class="topicList"><router-link :to="'/detailed_topic/'+item.topic_id"><Button type="primary" shape="circle" size="large">{{item.topic}}</Button></router-link></li>
+                    </ul>
+                    <br><br><br>
+                    <h1 class="title">{{question_title}}</h1>
+                    <p class="ques_desc">{{question_desc}}</p>
+                </div>
+                <ul class="bottom">
+                    <li class="li"><Button type="primary"  ghost="true" class="answer_write"><Icon type="md-brush" />写回答</Button></li>
+                    <li class="li"><Time :time="timeslot" /></li>
+                    <li class="li"><Icon type="ios-send" size="20"></Icon><span>分享</span></li>
                 </ul>
-                <br><br><br>
-                <h1 class="title">{{question_title}}</h1>
-                <p class="ques_desc">{{question_desc}}</p>
+                <div style="clear:both"></div>
             </div>
-            <ul class="bottom">
-                <li class="li"><Button type="primary"  ghost="true" class="answer_write"><Icon type="md-brush" />写回答</Button></li>
-                <li class="li"><Time :time="timeslot" /></li>
-                <li class="li"><Icon type="ios-send" size="20"></Icon><span>分享</span></li>
-            </ul>
-        </div>
-    </Card>
+        </Card>
+        <AnswerList api="/api/question" class="answer"></AnswerList>
+    </div>
+
 
 
 
 </template>
 
 <script>
+    import AnswerList from "@/components/AnswerList";
     export default {
         name: "QuestionDetailed",
+        components: {AnswerList},
         data() {
             return {
                 question_id: '',
@@ -74,7 +81,7 @@
                 this.topics.push(data2);
                 this.topics.push(data3);
                 this.question_title='BTSBTSBTSBTSBTSBTS';
-                this.question_desc='btsbtsbtsbtsbtsbtsbtsbts';
+                this.question_desc='btsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbtsbts';
                 this.timeslot=(new Date()).getTime() - 60 * 3 * 1000;
             }
         },
@@ -103,12 +110,6 @@
         list-style: none;
         padding:10px;
     }
-    .top_question{
-        width:90%;
-        margin-left:5%;
-        margin-right:5%;
-        height:250px;
-    }
     .content{
         text-align:left;
         padding:0px 0px;
@@ -133,5 +134,14 @@
     .ques_desc{
         font-size:25px;
         margin-left:20px;
+        word-break:break-all;
+    }
+    .whole{
+        width: 64%;
+        margin: 20px auto;
+        border: 1px solid lightgray;
+        box-shadow: 1px 1px 1px lightgray;
+        border-radius: 4px;
+        min-width: 1000px;
     }
 </style>

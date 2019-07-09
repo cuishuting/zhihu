@@ -59,6 +59,10 @@
                 <Col span="4">
                     <span @click="read_all=false" class="other" v-if="read_all">收起<Icon type="ios-arrow-up"/></span>
                 </Col>
+                <Col span="4">
+                <span v-if="author_id===$store.state.userID"><Button type="primary"><Icon type="md-close" />取消关注</Button></span>
+                </Col>
+
             </Row>
         </div>
         <div v-if="see_com">

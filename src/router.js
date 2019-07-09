@@ -14,7 +14,8 @@ import UserFollow from './components/UserFollow'
 import UserFans from './components/UserFans'
 import SearchAnswer from './components/SearchAnswer'
 import SearchUser from "./components/SearchUser";
-import ModifyPassword from "./pages/ModifyPassword"
+import ModifyPassword from "./pages/ModifyPassword";
+import QuestionDetailed from "./pages/QuestionDetailed";
 export default [
     {
         path: '/',
@@ -109,6 +110,6 @@ export default [
     },
     {
         path:'/question/:id',
-        component: ModifyPassword
+        component: QuestionDetailed
     }
 ]

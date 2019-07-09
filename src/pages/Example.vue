@@ -5,7 +5,7 @@
 </template>
 
 <script>
-    import QuestionDetailed from "@/components/QuestionDetailed";
+    import QuestionDetailed from "@/pages/QuestionDetailed";
     export default {
         name: "Example",
         components: {QuestionDetailed},

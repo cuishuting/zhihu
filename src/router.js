@@ -16,8 +16,9 @@ import SearchAnswer from './components/SearchAnswer'
 import SearchUser from "./components/SearchUser";
 import ModifyPassword from "./pages/ModifyPassword";
 import QuestionDetailed from "./pages/QuestionDetailed";
-import QuestionList from './components/QuestionList'
+import UserQuestion from './components/UserQuestion'
 import AddQuestion from "./pages/AddQuestion"
+import Questions from "./pages/Questions"
 
 export default [
     {
@@ -96,7 +97,7 @@ export default [
             },
             {
                 path: "ques",
-                component: QuestionList
+                component: UserQuestion
             }
         ]
     },
@@ -122,5 +123,9 @@ export default [
     {
         path:'/ask',
         component: AddQuestion
+    },
+    {
+        path: '/questions',
+        component: Questions
     }
 ]

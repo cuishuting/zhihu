@@ -5,6 +5,12 @@
                 <Question :data="item"></Question>
             </li>
         </ul>
+        <Button long v-if="data.length && hasMore" class="hint" @click="getData()">
+            加载更多
+        </Button>
+        <Button long v-else class="hint" @click="getData()">
+            没有找到问题, 请稍后再试...
+        </Button>
     </div>
 </template>
 
@@ -16,6 +22,9 @@
         components: {
             Question
         },
+        props:[
+            "api"
+        ],
         computed: {
             id() {
                 return this.$route.params.id
@@ -56,7 +65,7 @@
                 this.data.push(data, data2, data3)
             },
             getData() {
-                this.axios.get("/api/user_ques?user_id=" + this.id + "&start=" + this.start + "&end=" + this.end)
+                this.axios.get(this.api + "?user_id=" + this.id + "&start=" + this.start + "&end=" + this.end)
                     .then((resp) => {
                         if (resp.data.success) {
                             for (let i = 0; i < resp.data.data.length; i++) {

@@ -35,25 +35,36 @@
             }
         },
         mounted(){
-            if(!this.isLogin){
+            setTimeout(()=>{
+                if(!this.isLogin){
                 this.$Message.error("登陆才能提问哟");
                 this.$router.push("/login");
             }
+            },100)
+
         },
         methods: {
             ask() {
-                if (this.question_mark || !this.question.length) {
+                if (this.question_mark) {
                     this.$Message.error("请修改问题再发布哟~");
+                    return;
+                }
+                if(!this.question){
+                    this.$Message.error("问题不能为空~");
+                    return;
+                }
+                if (!this.desc) {
+                    this.$Message.error("详情不能为空~");
+                    return;
                 }
                 this.axios.post("/api/add_question", {
                     "question": this.question,
-                    "question_desc": this.question_desc,
+                    "question_desc": this.desc,
                     "topics": this.selected
                 }).then((resp)=>{
                     if (resp.data.success){
                         this.$Message.success("发布成功");
-                        // let id = resp.data.qusetion_id;
-                        //TODO router push
+                        this.$router.push("/question/" +  resp.data.qusetion_id)
                     } else {
                         this.$Message.error(resp.data.error);
                     }
@@ -66,27 +77,6 @@
                 }
             },
             search() {
-                let a = {
-                    topic_name: "test",
-                    topic_id: "1",
-                    description: "desadsa"
-                };
-                let ab = {
-                    topic_name: "teddsst",
-                    topic_id: "1d",
-                    description: "desadsa"
-                };
-                let ac = {
-                    topic_name: "d",
-                    topic_id: "1dc",
-                    description: "dedssadsa"
-                };
-                let adc = {
-                    topic_name: "ds",
-                    topic_id: "1dxc",
-                    description: "dedcssadsa"
-                };
-                this.topics.push(a, ab, adc, ac);
                 if (!this.topic_key) {
                     this.$Message.error("请输入内容");
                     return

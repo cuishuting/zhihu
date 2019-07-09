@@ -1,7 +1,7 @@
 <template>
     <Card class="question">
         <div class="question_content">
-            <h1 class="title">{{question_title}}</h1>
+            <router-link :to="'/question/' + question_id"><h1 class="title" style="color: #1a1a1a">{{question_title}}</h1></router-link>
             <h3 class="subtext"><Time :time="timeslot"/>&nbsp;•&nbsp;{{answer_count}}个回答</h3>
         </div>
     </Card>

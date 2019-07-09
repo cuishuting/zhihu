@@ -1,7 +1,7 @@
 <template>
     <Card class="root">
         <div class="answer" style="text-align:left">
-            <h2 class="question">{{title}}</h2>
+            <router-link :to="'/question/'+this.question_id" style="color: #1a1a1a"><h2 class="question">{{title}}</h2></router-link>
             <div class="answer_content" v-if="!read_all">
                 <p class="content">
                     <router-link :to="'/user/' + author_id">
@@ -9,7 +9,8 @@
                     </router-link>
                     <span>: </span>
                     <span @click="read_all=true">{{content_fragment}}</span>
-                    <span @click="read_all=true" class="read">阅读全文<Icon type="ios-arrow-down"/></span>
+                    &nbsp;
+                    <span @click="read_all=true" class="read" style="margin-left: 10px">阅读全文<Icon type="ios-arrow-down"/></span>
                 </p>
             </div>
             <div v-else>
@@ -54,13 +55,12 @@
                         <Icon type="ios-send" size="20"></Icon>
                         分享
                     </Button>
-
                 </Col>
                 <Col span="4">
                     <span @click="read_all=false" class="other" v-if="read_all">收起<Icon type="ios-arrow-up"/></span>
                 </Col>
                 <Col span="4">
-                <span v-if="author_id===$store.state.userID"><Button type="primary" @click="this.$emit('delete_this_answer')"><Icon type="md-close" />取消关注</Button></span>
+                <span v-if="author_id===$store.state.userID"><Button @click="deleteAnswer" class="other"><Icon type="md-close" />删除</Button></span>
                 </Col>
 
             </Row>
@@ -135,12 +135,38 @@
             Comment,
         },
         methods: {
+            deleteAnswer(){
+                this.$Modal.confirm({
+                    title: 'Title',
+                    content: '<p>您即将删除一个回答</p><p>删除后将不可恢复</p><p>确认要删除吗?</p>',
+                    okText: '确认',
+                    cancelText: '取消',
+                    onOk: ()=>{
+                        this.axios.post("/api/delete_answer", {
+                            "answer_id": this.answer_num
+                        }).then((resp)=>{
+                            if (resp.data.success){
+                                this.$emit('delete-answer', this.answer_num);
+                                this.$Message.success("删除成功")
+                            } else {
+                                this.$Message.error(resp.data.error)
+                            }
+                        }).catch((err)=>{
+                            // eslint-disable-next-line no-console
+                            console.log(err);
+                            this.$Message.error("网络连接失败");
+                        });
+                    }
+                });
+
+            },
             share() {
                 let clipboard = new ClipboardJS('.btn');
                 clipboard.on('success', (e)=> {
                     this.$Message.success('已复制链接，粘贴可分享给好友', '提示');
                     e.clearSelection();
                 });
+                // eslint-disable-next-line no-unused-vars
                 clipboard.on('error',(e)=> {
                     this.$Message.error('暂时不支持此浏览器的复制，请手动选择以下链接后再复制分享:\n' + this.clipBoardData, '提示');
                 });

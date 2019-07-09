@@ -24,7 +24,7 @@
         computed:{
             exist(){
                 let path = this.$route.path.split("/");
-                 return path[1] === "index" || path[1] === "following" || path[1] === "search" || path[1] === "topics" || path[1] === "" ||path[1] === 'topic';
+                 return path[1] === "index" || path[1] === "following" || path[1] === "search" || path[1] === "topics" || path[1] === "" ||path[1] === 'topic' ||path[1] === "question" || path[1] === "questions";
             }
         },
         beforeCreate() {

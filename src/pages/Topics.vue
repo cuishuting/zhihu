@@ -66,7 +66,7 @@
                 }).then((resp)=>{
                     if (resp.data.success){
                         this.$Message.success("添加成功");
-                        this.data.push(resp.info)
+                        this.data.push(resp.data.info)
                     }else {
                         this.$Message.error(resp.data.error);
                     }

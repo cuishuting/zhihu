@@ -54,7 +54,7 @@
             }
         },
         mounted(){
-            this.fakeData();
+            // this.fakeData();
             this.getData();
         }
     }

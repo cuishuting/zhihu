@@ -107,4 +107,8 @@ export default [
     {  path: '/modify_password',
         component: ModifyPassword
     },
+    {
+        path:'/question/:id',
+        component: ModifyPassword
+    }
 ]

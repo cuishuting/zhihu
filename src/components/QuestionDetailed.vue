@@ -1,13 +1,21 @@
 <template>
-    <div>
-        <ul>
-            <li v-for="(item,key) in topics" :key="key" class="topicList"><router-link to="/detailed_topic/:item.topic_id"><Button type="primary" shape="circle">{{item.topic}}</Button></router-link></li>
-        </ul>
-        <h1>{{question_title}}</h1>
-        <p>{{question_desc}}</p>
-        <Button type="primary" style="float:left"><Icon type="md-brush" />写回答</Button>
-        <Icon type="ios-send" size="20"></Icon><span>分享</span>
-    </div>
+    <Card class="top_question">
+        <div>
+            <div class="content">
+                <ul>
+                    <li v-for="(item,key) in topics" :key="key" class="topicList"><router-link :to="'/detailed_topic/'+item.topic_id"><Button type="primary" shape="circle" size="large">{{item.topic}}</Button></router-link></li>
+                </ul>
+                <br><br><br>
+                <h1 class="title">{{question_title}}</h1>
+                <p class="ques_desc">{{question_desc}}</p>
+            </div>
+            <ul class="bottom">
+                <li class="li"><Button type="primary"  ghost="true" class="answer_write"><Icon type="md-brush" />写回答</Button></li>
+                <li class="li"><Time :time="timeslot" /></li>
+                <li class="li"><Icon type="ios-send" size="20"></Icon><span>分享</span></li>
+            </ul>
+        </div>
+    </Card>
 
 
 
@@ -51,8 +59,23 @@
 
             fakeData(){
                 let data1={
-                    topic:''
-                }
+                    topic:'BTS',
+                    topic_id:'1',
+                };
+                let data2={
+                    topic:'BTS',
+                    topic_id:'1',
+                };
+                let data3={
+                    topic:'BTS',
+                    topic_id:'1',
+                };
+                this.topics.push(data1);
+                this.topics.push(data2);
+                this.topics.push(data3);
+                this.question_title='BTSBTSBTSBTSBTSBTS';
+                this.question_desc='btsbtsbtsbtsbtsbtsbtsbts';
+                this.timeslot=(new Date()).getTime() - 60 * 3 * 1000;
             }
         },
         computed:{
@@ -68,7 +91,8 @@
             },
         },
         mounted: function(){
-            this.init();
+            // this.init();
+            this.fakeData();
         }
     }
 </script>
@@ -78,5 +102,36 @@
         float:left;
         list-style: none;
         padding:10px;
+    }
+    .top_question{
+        width:90%;
+        margin-left:5%;
+        margin-right:5%;
+        height:250px;
+    }
+    .content{
+        text-align:left;
+        padding:0px 0px;
+    }
+    .title{
+        margin-left:20px;
+    }
+    .answer_write{
+        float:left;
+        margin-bottom:0px;
+    }
+    .bottom{
+        width:100%;
+        float:left;
+        margin-left:-20px;
+    }
+    .li{
+        float:left;
+        margin-left:0px;
+        padding:0px 40px;
+    }
+    .ques_desc{
+        font-size:25px;
+        margin-left:20px;
     }
 </style>

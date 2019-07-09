@@ -50,7 +50,7 @@
                     </Button>
                 </Col>
                 <Col span="3">
-                    <Button @click="seeComment" type="default" class="other">
+                    <Button @click="share" type="default" class="other btn" :data-clipboard-text="copyValue">
                         <Icon type="ios-send" size="20"></Icon>
                         分享
                     </Button>
@@ -69,15 +69,13 @@
 </template>
 
 <script>
-    import Button from 'iview';
-    import Icon from 'iview';
-    import Menu from 'iview';
-    import CommentList from "./CommentList"
 
+    import CommentList from "./CommentList"
+    import ClipboardJS from 'clipboard'
     export default {
         name: "AnswerItem",
         components: {
-            CommentList
+            CommentList,
         },
         props: {
             data: Object,
@@ -104,7 +102,12 @@
                 let min = date.getMinutes();
                 let sec = date.getSeconds();
                 return year + '-' + month + '-' + day + ' ' + hour + ':' + min + ':' + sec;
-            }
+            },
+            copyValue(){
+                let a = window.location.href;
+                let a2 = a.split('/').slice(0,3).join('/');
+                return a2 + '/question/'+ this.question_id+'打开这条链接查看问题详情';
+            },
         },
         data() {
             return {
@@ -125,12 +128,19 @@
             }
         },
         component: {
-            Button,
-            Icon,
-            Menu,
             Comment,
         },
         methods: {
+            share() {
+                let clipboard = new ClipboardJS('.btn');
+                clipboard.on('success', (e)=> {
+                    this.$Message.success('已复制链接，粘贴可分享给好友', '提示');
+                    e.clearSelection();
+                });
+                clipboard.on('error',(e)=> {
+                    this.$Message.error('暂时不支持此浏览器的复制，请手动选择以下链接后再复制分享:\n' + this.clipBoardData, '提示');
+                });
+            },
             seeComment() {
                 this.see_com = !this.see_com;
             },

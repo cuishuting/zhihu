@@ -2,6 +2,7 @@
     <div id="app">
         <Header/>
         <div style="height: 100px;"></div>
+        <RightNav v-if="exist"></RightNav>
         <router-view>
         </router-view>
     </div>
@@ -10,11 +11,20 @@
 
 <script>
     import Header from "./components/Header";
+    import RightNav from "./components/RightNav"
 
     export default {
         name: 'app',
         components: {
             Header,
+            RightNav
+        },
+        computed:{
+            exist(){
+                let path = this.$route.path.split("/");
+                 return path[1] === "index" || path[1] === "following" || path[1] === "search" || path[1] === "topic" || path[1] === "";
+
+            }
         },
         beforeCreate() {
             this.axios.get("/api/islogin").then((resp) => {

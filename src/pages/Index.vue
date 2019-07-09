@@ -57,7 +57,7 @@
 
     .index {
         width: 43%;
-        margin-left: 17.5%;
+        margin-left: 16%;
         border: 1px solid lightgray;
         box-shadow: 1px 1px 1px lightgray;
         border-radius: 4px;

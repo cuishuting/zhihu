@@ -1,6 +1,6 @@
 <template class="list">
     <ul>
-        <li v-for="(item,key) in data" :key="key">
+        <li v-for="item in data" :key="item.userid">
             <FollowerItem :data="item"></FollowerItem>
         </li>
     </ul>
@@ -28,9 +28,9 @@
         },
         watch: {
             // eslint-disable-next-line no-unused-vars
-            '$route'(to, from) {
-                this.getFollowers()
-            }
+            // '$route'(to, from) {
+            //     this.getFollowers()
+            // }
         },
         methods: {
             fakeData() {

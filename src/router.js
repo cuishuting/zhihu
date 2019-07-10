@@ -5,7 +5,7 @@ import Register from './pages/Register'
 import Search from './pages/Search';
 import Following from './pages/Following';
 import Topics from './pages/Topics';
-import DetailedTopic from "@/pages/DetailedTopic";
+import Topic from "./pages/Topic";
 import Example from "./pages/Example";
 import Newest from './components/Newest'
 import Hottest from './components/Hottest'
@@ -16,6 +16,10 @@ import SearchAnswer from './components/SearchAnswer'
 import SearchUser from "./components/SearchUser";
 import ModifyPassword from "./pages/ModifyPassword";
 import QuestionDetailed from "./pages/QuestionDetailed";
+import UserQuestion from './components/UserQuestion'
+import AddQuestion from "./pages/AddQuestion"
+import Questions from "./pages/Questions"
+
 export default [
     {
         path: '/',
@@ -90,16 +94,20 @@ export default [
             {
                 path: "fans",
                 component: UserFans
+            },
+            {
+                path: "ques",
+                component: UserQuestion
             }
         ]
     },
     {
-        path: '/topic',
+        path: '/topics',
         component: Topics
     },
     {
-        path:'/detailed_topic/:topic_id',
-        component:DetailedTopic
+        path:'/topic/:id',
+        component:Topic
     },
     {
         path: '/example',
@@ -111,5 +119,13 @@ export default [
     {
         path:'/question/:id',
         component: QuestionDetailed
+    },
+    {
+        path:'/ask',
+        component: AddQuestion
+    },
+    {
+        path: '/questions',
+        component: Questions
     }
 ]

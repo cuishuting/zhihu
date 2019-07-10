@@ -7,28 +7,28 @@
         <div class="card" v-if="isLogin">
             <Row class="add">
                 <Col span="8">
-                    <a class="add-item">
+                    <router-link to="/questions" @click="answer_q" class="add-item">
                         <div class="add-icon">
                             <Icon type="ios-paper"/>
                         </div>
                         <div class="add-title">写回答</div>
-                    </a>
+                    </router-link>
                 </Col>
                 <Col span="8">
-                    <a class="add-item">
+                    <router-link class="add-item" to="/ask">
                         <div class="add-icon">
                             <Icon type="ios-search"/>
                         </div>
                         <div class="add-title">提问题</div>
-                    </a>
+                    </router-link>
                 </Col>
                 <Col span="8">
-                    <a class="add-item">
+                    <router-link :to="'/user/' + id" class="add-item">
                         <div class="add-icon">
                             <Icon type="ios-home"/>
                         </div>
                         <div class="add-title">看主页</div>
-                    </a>
+                    </router-link>
                 </Col>
             </Row>
         </div>
@@ -58,6 +58,11 @@
             },
             isLogin(){
                 return this.$store.state.isLogin
+            }
+        },
+        methods: {
+            answer_q(){
+                this.$Message.success('看看新的问题, 找一个要回答的问题吧!');
             }
         }
 

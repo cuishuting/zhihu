@@ -1,9 +1,8 @@
 <template>
     <div class="list">
         <ul v-if="data.length">
-            <li v-for="(item,key) in data" :key="key" style="margin-top: 3px">
-                <blog-post v-on="delete_this_answer(key)"></blog-post>
-                <AnswerItem :data="item" :preview="preview" v-if="this.delete"></AnswerItem>
+            <li v-for="item in data" :key="item.answer_id" style="margin-top: 3px">
+                <AnswerItem :data="item" :preview="preview" @delete-answer="delete_answer"></AnswerItem>
             </li>
         </ul>
         <Button long v-if="data.length && hasMore" class="hint" @click="getAnswer()">
@@ -41,7 +40,6 @@
                 end: 20,
                 hasMore: true,
                 load: true,
-                delete:true,
             }
         },
         components: {
@@ -70,10 +68,15 @@
                     let temp = response.data;
                     if (temp.success) {
                         this.hasMore = temp.hasMore;
-                        this.start = this.end;
-                        this.end = this.start + 10;
                         for (let i = 0; i < temp.data.length; i++) {
                             this.data.push(temp.data[i])
+                        }
+                        if (this.hasMore) {
+                            this.start = this.end;
+                            this.end = this.start + 10;
+                        } else {
+                            this.start = this.data.length;
+                            this.end = this.start + 10
                         }
                     } else {
                         this.$Message.error(temp.error);
@@ -86,21 +89,13 @@
                     this.load = false;
                 })
             },
-            delete_this_answer(key) {
-                this.post('/api/delete_answer',{
-                    'answer_id':this.answer_id,
-                },{timeout: 2500}).then((resp)=>{
-                    if(!resp.data.success){
-                        this.$Message.error(resp.data.error);
+            delete_answer(id) {
+                for (let i = 0; i <this.data.length; i++) {
+                    if (this.data[i].answer_id === id){
+                        this.data.splice(i,1);
                     }
-                    else {
-                        this.items.splice(key,1);
-                        this.delete=false;
-                    }
-                })
+                }
             },
-
-
             fakeData() {
                 let data1 = {
                     question_id: "123",
@@ -135,7 +130,7 @@
         },
         mounted: function () {
             this.getAnswer(this.start, this.end);
-            this.fakeData();
+            // this.fakeData();
         }
     }
 </script>

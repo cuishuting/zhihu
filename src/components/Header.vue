@@ -3,7 +3,7 @@
         <div class="inner">
             <Row>
                 <Col span="9">
-                    <div class="layout_logo"><p>LOGO</p></div>
+                    <div class="layout_logo"><p>知&nbsp;否</p></div>
                     <div class="layout_nav">
                         <Menu mode="horizontal" theme="light" :active-name="pos" width="auto" @on-select="select">
                             <MenuItem name="1">
@@ -27,12 +27,20 @@
                 </Col>
                 <template v-if="isLogin">
                     <Col span="2" class="head_sculpture tip">
-                        <Badge :count="tip">
-                            <Avatar icon="md-notifications" class="tips"/>
-                        </Badge>
+                        <Dropdown style="text-align: left">
+                            <Badge :count="tip">
+                                <Avatar icon="md-notifications" class="tips"/>
+                            </Badge>
+                            <DropdownMenu slot="list" style="text-align: left">
+                                <DropdownItem v-for="(item, index) in tips" :key="index" :class="item.is_read ? 'read':'unread' " style="text-align: left">
+                                    <router-link :to="'/user/'+ item.other_user_id">{{item.other_user_name}}</router-link>  {{item.action}} <Icon type="md-add" class="unread-icon" v-if="!item.is_read" />
+                                </DropdownItem>
+                            </DropdownMenu>
+                        </Dropdown>
+
                     </Col>
                     <Col span="1">
-                        <Dropdown>
+                        <Dropdown class="drop">
                             <div class="head_sculpture">
                                 <Avatar shape="square" :src="head_sculpture"/>
                             </div>
@@ -92,6 +100,7 @@
                 head_sculpture: "",
                 tip: 0,
                 search_text: "",
+                tips:[]
             }
         },
         computed: {
@@ -101,7 +110,7 @@
             pos() {
                 if (this.$route.path === "/index" || this.$route.path === "/")
                     return "1";
-                else if (this.$route.path === "/topic")
+                else if (this.$route.path === "/topics")
                     return "2";
                 else if (this.$route.path === "/following")
                     return "3";
@@ -114,6 +123,16 @@
             }
         },
         methods: {
+            getTips(){
+                this.axios.get("/api/get_tips")
+                    .then((resp)=>{
+                        if (resp.data.success){
+                            this.tips = resp.data.tips
+                        } else {
+                            this.$Message.error("网络连接失败, 请重试")
+                        }
+                    })
+            },
             logout() {
                 if (!this.isLogin) {
                     this.$Message.error("未登录");
@@ -137,7 +156,7 @@
                 if (value === '1') {
                     this.$router.push("/index")
                 } else if (value === '2') {
-                    this.$router.push("/topic")
+                    this.$router.push("/topics")
                 } else {
                     this.$router.push("/following")
                 }
@@ -156,7 +175,7 @@
                 }
             },
             Question() {
-
+                this.$router.push("/ask")
             },
             get_self_info() {
                 if (this.isLogin) {
@@ -166,7 +185,7 @@
                             this.username = data.username;
                             this.userid = data.userid;
                             this.head_sculpture = data.head_sculpture;
-                            this.tip = data.tip;
+                            this.tip = data.tips;
                             this.$store.commit('setUsername', this.username);
                             this.$store.commit('setUserID', this.userid);
                         }
@@ -176,6 +195,7 @@
         },
         mounted() {
             this.get_self_info();
+            this.getTips()
         }
     }
 </script>
@@ -253,5 +273,20 @@
     .tip {
         text-align: right;
         margin-right: 15px;
+    }
+
+    .read{
+        color: gray;
+    }
+    .unread{
+
+    }
+    .unread-icon{
+        color: #FF0000;
+        font-size: 10px;
+    }
+
+    .drop{
+        text-align: left;
     }
 </style>
